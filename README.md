@@ -11,7 +11,8 @@ The macOS lock screen shows the main display's wallpaper, so the quote appears t
 > and tested on the owner's Mac. They have not been independently reviewed or audited.
 > Read the code before running it — it installs background jobs (LaunchAgents) and changes your
 > wallpaper — and use it at your own risk. Quote wording and attributions were also produced by
-> the AI; check them against an edition of the plays if accuracy matters to you.
+> the AI. They are checked automatically against one public-domain edition (see
+> [Checking quotes](#checking-quotes)), not by a Shakespeare scholar.
 
 Requires macOS (tested on macOS 27 with the system Python 3.9) and uses only fonts that ship with macOS.
 
@@ -59,6 +60,24 @@ keeps working whether or not the app is running.
 
 The agent starts the app at login and restarts it after a crash; choosing **Quit** keeps it closed
 until the next login. Logs: `logs/menubar.out.log`, `logs/menubar.err.log`.
+
+## Checking quotes
+
+```sh
+.venv/bin/python tools/check_quotes.py
+```
+
+Compares every entry in `quotes.json` with the
+[Project Gutenberg Complete Works](https://www.gutenberg.org/ebooks/100) (downloaded once, cached in
+`~/Library/Caches/shakespeare-quotes/`) and prints where each quote is found (play, act, scene,
+speaker), flagging wording that isn't found, the wrong play or a different speaker. Exits with
+status 1 if anything needs review. Punctuation, line breaks and spellings like *strain’d* are
+ignored; play names must match the list in `tools/check_quotes.py`.
+
+All 50 included quotes pass. Three are marked `CLOSE` because they use the wording common in
+quotation and in some other editions rather than Gutenberg's text: *What a piece of work is
+**a** man* (Gutenberg: "is man"), *by any other **word*** ("name") and *this **sun** of York*
+("son", the line puns on both).
 
 ## Development
 
