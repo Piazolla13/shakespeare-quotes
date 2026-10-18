@@ -187,8 +187,14 @@ def layout(draw, text, width, height):
 def attribution_text(quote):
     # Name it once when the character is the title role (Hamlet, Macbeth, ...)
     if quote["character"] == quote["play"]:
-        return f"— {quote['play']}".upper()
-    return f"— {quote['character']}, {quote['play']}".upper()
+        text = f"— {quote['play']}"
+    else:
+        text = f"— {quote['character']}, {quote['play']}"
+    if quote.get("act"):
+        text += f" · Act {quote['act']}"
+        if quote.get("scene"):
+            text += f", Scene {quote['scene']}"
+    return text.upper()
 
 
 def render(quote, width, height):

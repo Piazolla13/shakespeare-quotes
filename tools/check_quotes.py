@@ -6,6 +6,7 @@ who speaks it there, and in which play, act and scene. Nothing is changed; fix q
 
     .venv/bin/python tools/check_quotes.py              # downloads the text once and caches it
     .venv/bin/python tools/check_quotes.py --source pg100.txt
+    .venv/bin/python tools/check_quotes.py --write-refs   # also save act/scene into quotes.json
 
 Exit status is 1 if any quote has a wording, speaker or play problem.
 """
@@ -173,7 +174,11 @@ def speaker_matches(character, speaker, play):
     return bool(ours) and bool(theirs) and (ours <= theirs or theirs <= ours)
 
 
-def check(quotes, words, where):
+def check(quotes, words, where, write_refs=False):
+    """Print a report; returns the number of quotes with problems.
+
+    With write_refs, quotes without problems get "act" / "scene" set from the text (in place).
+    """
     positions = defaultdict(list)
     for i, word in enumerate(words):
         positions[word].append(i)
@@ -182,29 +187,33 @@ def check(quotes, words, where):
     for q in quotes:
         quote_words = normalize_words(q["quote"])
         ratio, start = best_match(quote_words, words, positions)
+        found = start is not None and ratio >= CLOSE_ENOUGH
         issues = []
         if q["play"] not in PLAY_TITLES:
             issues.append(f"unknown play name {q['play']!r}")
-        if start is None or ratio < CLOSE_ENOUGH:
+        if not found:
             issues.append("wording not found")
             status = "MISSING"
         else:
             status = "EXACT" if ratio >= 0.999 else f"CLOSE {ratio:.2f}"
-            play, act, scene, speaker, _ = where[min(start, len(where) - 1)]
+            play, act, scene, speaker, _ = where[start]
             if play != q["play"]:
                 issues.append(f"found in {play}")
             if not speaker_matches(q["character"], speaker, play):
                 issues.append(f"spoken by {speaker}")
+            if "act" in q and (q["act"], q.get("scene")) != (act, scene):
+                issues.append(f"found in Act {act}, Scene {scene}, not Act {q['act']}, Scene {q.get('scene')}")
         problems += bool(issues)
 
         print(f"{'!!' if issues else 'ok'} {status:<10} {q['quote'][:60]}")
-        if start is not None and ratio >= CLOSE_ENOUGH:
-            play, act, scene, speaker, _ = where[start]
+        if found:
             print(f"   {play} {act or '?'}.{scene or '?'} — {speaker}")
             if status != "EXACT":
                 end = min(start + len(quote_words), len(where) - 1)
                 source_lines = list(dict.fromkeys(w[4] for w in where[start:end + 1]))
                 print(f"   text: {' / '.join(source_lines)}")
+            if write_refs and not issues and act and scene:
+                q["act"], q["scene"] = act, scene
         for issue in issues:
             print(f"   -> {issue} (quotes.json says {q['character']}, {q['play']})")
     return problems
@@ -214,12 +223,19 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__.strip().splitlines()[0])
     parser.add_argument("--source", help="path to a local copy of pg100.txt")
     parser.add_argument("--quotes", default=QUOTES_PATH, help="quotes file to check")
+    parser.add_argument("--write-refs", action="store_true",
+                        help="save act and scene into the quotes file for quotes without problems")
     args = parser.parse_args()
 
     with open(args.quotes, encoding="utf-8") as f:
         quotes = json.load(f)
     words, where = index_works(load_source(args.source))
-    problems = check(quotes, words, where)
+    problems = check(quotes, words, where, args.write_refs)
+    if args.write_refs:
+        with open(args.quotes, "w", encoding="utf-8") as f:
+            json.dump(quotes, f, indent=2, ensure_ascii=False)
+            f.write("\n")
+        print(f"Wrote act/scene references to {args.quotes}")
     print(f"\n{len(quotes) - problems} of {len(quotes)} quotes OK, {problems} to review")
     sys.exit(1 if problems else 0)
 

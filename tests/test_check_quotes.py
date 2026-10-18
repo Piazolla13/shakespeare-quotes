@@ -96,6 +96,23 @@ def test_problems_are_reported(works, capsys, quote, expected):
     assert expected in out
 
 
+def test_write_refs_fills_act_and_scene_only_for_good_quotes(works, capsys):
+    good = {"quote": "If music be the food of love, play on.", "play": "Twelfth Night", "character": "Orsino"}
+    bad = {"quote": "If music be the food of love, play on.", "play": "Twelfth Night", "character": "Viola"}
+    cq.check([good, bad], *works, write_refs=True)
+    capsys.readouterr()
+    assert (good["act"], good["scene"]) == ("I", "I")
+    assert "act" not in bad
+
+
+def test_wrong_act_or_scene_is_reported(works, capsys):
+    quote = {"quote": "Life's but a walking shadow, a poor player.", "play": "Macbeth",
+             "character": "Macbeth", "act": "V", "scene": "III"}
+    problems, out = run([quote], works, capsys)
+    assert problems == 1
+    assert "found in Act V, Scene V, not Act V, Scene III" in out
+
+
 @pytest.mark.parametrize("character, speaker, play", [
     ("King Henry", "KING", "Henry V"),
     ("King Henry IV", "KING", "Henry IV, Part 2"),

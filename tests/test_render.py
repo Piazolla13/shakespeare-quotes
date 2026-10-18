@@ -64,3 +64,9 @@ def test_attribution_names_title_role_once():
     assert sw.attribution_text(SHORT) == "— HAMLET"
     assert sw.attribution_text({"quote": "x", "play": "Twelfth Night", "character": "Malvolio"}) \
         == "— MALVOLIO, TWELFTH NIGHT"
+
+
+def test_attribution_includes_act_and_scene():
+    quote = {"quote": "x", "play": "Twelfth Night", "character": "Malvolio", "act": "II", "scene": "V"}
+    assert sw.attribution_text(quote) == "— MALVOLIO, TWELFTH NIGHT · ACT II, SCENE V"
+    assert sw.attribution_text({**SHORT, "act": "V"}) == "— HAMLET · ACT V"

@@ -2,251 +2,351 @@
   {
     "quote": "We are such stuff as dreams are made on, and our little life is rounded with a sleep.",
     "play": "The Tempest",
-    "character": "Prospero"
+    "character": "Prospero",
+    "act": "IV",
+    "scene": "I"
   },
   {
     "quote": "This above all: to thine own self be true.",
     "play": "Hamlet",
-    "character": "Polonius"
+    "character": "Polonius",
+    "act": "I",
+    "scene": "III"
   },
   {
     "quote": "All the world's a stage, and all the men and women merely players.",
     "play": "As You Like It",
-    "character": "Jaques"
+    "character": "Jaques",
+    "act": "II",
+    "scene": "VII"
   },
   {
     "quote": "The course of true love never did run smooth.",
     "play": "A Midsummer Night's Dream",
-    "character": "Lysander"
+    "character": "Lysander",
+    "act": "I",
+    "scene": "I"
   },
   {
     "quote": "Lord, what fools these mortals be!",
     "play": "A Midsummer Night's Dream",
-    "character": "Puck"
+    "character": "Puck",
+    "act": "III",
+    "scene": "II"
   },
   {
     "quote": "Love looks not with the eyes, but with the mind, and therefore is winged Cupid painted blind.",
     "play": "A Midsummer Night's Dream",
-    "character": "Helena"
+    "character": "Helena",
+    "act": "I",
+    "scene": "I"
   },
   {
     "quote": "To be, or not to be, that is the question.",
     "play": "Hamlet",
-    "character": "Hamlet"
+    "character": "Hamlet",
+    "act": "III",
+    "scene": "I"
   },
   {
     "quote": "There is nothing either good or bad, but thinking makes it so.",
     "play": "Hamlet",
-    "character": "Hamlet"
+    "character": "Hamlet",
+    "act": "II",
+    "scene": "II"
   },
   {
     "quote": "There are more things in heaven and earth, Horatio, than are dreamt of in your philosophy.",
     "play": "Hamlet",
-    "character": "Hamlet"
+    "character": "Hamlet",
+    "act": "I",
+    "scene": "V"
   },
   {
     "quote": "Brevity is the soul of wit.",
     "play": "Hamlet",
-    "character": "Polonius"
+    "character": "Polonius",
+    "act": "II",
+    "scene": "II"
   },
   {
     "quote": "The readiness is all.",
     "play": "Hamlet",
-    "character": "Hamlet"
+    "character": "Hamlet",
+    "act": "V",
+    "scene": "II"
   },
   {
     "quote": "The rest is silence.",
     "play": "Hamlet",
-    "character": "Hamlet"
+    "character": "Hamlet",
+    "act": "V",
+    "scene": "II"
   },
   {
     "quote": "What a piece of work is a man!",
     "play": "Hamlet",
-    "character": "Hamlet"
+    "character": "Hamlet",
+    "act": "II",
+    "scene": "II"
   },
   {
     "quote": "What's in a name? That which we call a rose by any other word would smell as sweet.",
     "play": "Romeo and Juliet",
-    "character": "Juliet"
+    "character": "Juliet",
+    "act": "II",
+    "scene": "II"
   },
   {
     "quote": "Parting is such sweet sorrow.",
     "play": "Romeo and Juliet",
-    "character": "Juliet"
+    "character": "Juliet",
+    "act": "II",
+    "scene": "II"
   },
   {
     "quote": "These violent delights have violent ends.",
     "play": "Romeo and Juliet",
-    "character": "Friar Laurence"
+    "character": "Friar Laurence",
+    "act": "II",
+    "scene": "VI"
   },
   {
     "quote": "Wisely and slow; they stumble that run fast.",
     "play": "Romeo and Juliet",
-    "character": "Friar Laurence"
+    "character": "Friar Laurence",
+    "act": "II",
+    "scene": "III"
   },
   {
     "quote": "My bounty is as boundless as the sea, my love as deep; the more I give to thee, the more I have, for both are infinite.",
     "play": "Romeo and Juliet",
-    "character": "Juliet"
+    "character": "Juliet",
+    "act": "II",
+    "scene": "II"
   },
   {
     "quote": "Tomorrow, and tomorrow, and tomorrow, creeps in this petty pace from day to day.",
     "play": "Macbeth",
-    "character": "Macbeth"
+    "character": "Macbeth",
+    "act": "V",
+    "scene": "V"
   },
   {
     "quote": "Life's but a walking shadow, a poor player that struts and frets his hour upon the stage.",
     "play": "Macbeth",
-    "character": "Macbeth"
+    "character": "Macbeth",
+    "act": "V",
+    "scene": "V"
   },
   {
     "quote": "What's done cannot be undone.",
     "play": "Macbeth",
-    "character": "Lady Macbeth"
+    "character": "Lady Macbeth",
+    "act": "V",
+    "scene": "I"
   },
   {
     "quote": "Fair is foul, and foul is fair.",
     "play": "Macbeth",
-    "character": "The Witches"
+    "character": "The Witches",
+    "act": "I",
+    "scene": "I"
   },
   {
     "quote": "Look like the innocent flower, but be the serpent under it.",
     "play": "Macbeth",
-    "character": "Lady Macbeth"
+    "character": "Lady Macbeth",
+    "act": "I",
+    "scene": "V"
   },
   {
     "quote": "The fault, dear Brutus, is not in our stars, but in ourselves.",
     "play": "Julius Caesar",
-    "character": "Cassius"
+    "character": "Cassius",
+    "act": "I",
+    "scene": "II"
   },
   {
     "quote": "Cowards die many times before their deaths; the valiant never taste of death but once.",
     "play": "Julius Caesar",
-    "character": "Julius Caesar"
+    "character": "Julius Caesar",
+    "act": "II",
+    "scene": "II"
   },
   {
     "quote": "There is a tide in the affairs of men, which, taken at the flood, leads on to fortune.",
     "play": "Julius Caesar",
-    "character": "Brutus"
+    "character": "Brutus",
+    "act": "IV",
+    "scene": "III"
   },
   {
     "quote": "Friends, Romans, countrymen, lend me your ears.",
     "play": "Julius Caesar",
-    "character": "Mark Antony"
+    "character": "Mark Antony",
+    "act": "III",
+    "scene": "II"
   },
   {
     "quote": "Some are born great, some achieve greatness, and some have greatness thrust upon 'em.",
     "play": "Twelfth Night",
-    "character": "Malvolio"
+    "character": "Malvolio",
+    "act": "II",
+    "scene": "V"
   },
   {
     "quote": "If music be the food of love, play on.",
     "play": "Twelfth Night",
-    "character": "Orsino"
+    "character": "Orsino",
+    "act": "I",
+    "scene": "I"
   },
   {
     "quote": "Better a witty fool than a foolish wit.",
     "play": "Twelfth Night",
-    "character": "Feste"
+    "character": "Feste",
+    "act": "I",
+    "scene": "V"
   },
   {
     "quote": "How sharper than a serpent's tooth it is to have a thankless child!",
     "play": "King Lear",
-    "character": "King Lear"
+    "character": "King Lear",
+    "act": "I",
+    "scene": "IV"
   },
   {
     "quote": "Nothing will come of nothing.",
     "play": "King Lear",
-    "character": "King Lear"
+    "character": "King Lear",
+    "act": "I",
+    "scene": "I"
   },
   {
     "quote": "The weight of this sad time we must obey, speak what we feel, not what we ought to say.",
     "play": "King Lear",
-    "character": "Edgar"
+    "character": "Edgar",
+    "act": "V",
+    "scene": "III"
   },
   {
     "quote": "O brave new world, that has such people in't!",
     "play": "The Tempest",
-    "character": "Miranda"
+    "character": "Miranda",
+    "act": "V",
+    "scene": "I"
   },
   {
     "quote": "Hell is empty, and all the devils are here.",
     "play": "The Tempest",
-    "character": "Ariel"
+    "character": "Ariel",
+    "act": "I",
+    "scene": "II"
   },
   {
     "quote": "What's past is prologue.",
     "play": "The Tempest",
-    "character": "Antonio"
+    "character": "Antonio",
+    "act": "II",
+    "scene": "I"
   },
   {
     "quote": "O, beware, my lord, of jealousy; it is the green-eyed monster.",
     "play": "Othello",
-    "character": "Iago"
+    "character": "Iago",
+    "act": "III",
+    "scene": "III"
   },
   {
     "quote": "Reputation is an idle and most false imposition, oft got without merit and lost without deserving.",
     "play": "Othello",
-    "character": "Iago"
+    "character": "Iago",
+    "act": "II",
+    "scene": "III"
   },
   {
     "quote": "The quality of mercy is not strained; it droppeth as the gentle rain from heaven.",
     "play": "The Merchant of Venice",
-    "character": "Portia"
+    "character": "Portia",
+    "act": "IV",
+    "scene": "I"
   },
   {
     "quote": "All that glisters is not gold.",
     "play": "The Merchant of Venice",
-    "character": "Prince of Morocco"
+    "character": "Prince of Morocco",
+    "act": "II",
+    "scene": "VII"
   },
   {
     "quote": "How far that little candle throws his beams! So shines a good deed in a naughty world.",
     "play": "The Merchant of Venice",
-    "character": "Portia"
+    "character": "Portia",
+    "act": "V",
+    "scene": "I"
   },
   {
     "quote": "We few, we happy few, we band of brothers.",
     "play": "Henry V",
-    "character": "King Henry"
+    "character": "King Henry",
+    "act": "IV",
+    "scene": "III"
   },
   {
     "quote": "Once more unto the breach, dear friends, once more.",
     "play": "Henry V",
-    "character": "King Henry"
+    "character": "King Henry",
+    "act": "III",
+    "scene": "I"
   },
   {
     "quote": "Uneasy lies the head that wears a crown.",
     "play": "Henry IV, Part 2",
-    "character": "King Henry IV"
+    "character": "King Henry IV",
+    "act": "III",
+    "scene": "I"
   },
   {
     "quote": "The better part of valour is discretion.",
     "play": "Henry IV, Part 1",
-    "character": "Falstaff"
+    "character": "Falstaff",
+    "act": "V",
+    "scene": "IV"
   },
   {
     "quote": "Now is the winter of our discontent made glorious summer by this sun of York.",
     "play": "Richard III",
-    "character": "Richard"
+    "character": "Richard",
+    "act": "I",
+    "scene": "I"
   },
   {
     "quote": "Love all, trust a few, do wrong to none.",
     "play": "All's Well That Ends Well",
-    "character": "Countess"
+    "character": "Countess",
+    "act": "I",
+    "scene": "I"
   },
   {
     "quote": "Our doubts are traitors, and make us lose the good we oft might win by fearing to attempt.",
     "play": "Measure for Measure",
-    "character": "Lucio"
+    "character": "Lucio",
+    "act": "I",
+    "scene": "IV"
   },
   {
     "quote": "The fool doth think he is wise, but the wise man knows himself to be a fool.",
     "play": "As You Like It",
-    "character": "Touchstone"
+    "character": "Touchstone",
+    "act": "V",
+    "scene": "I"
   },
   {
     "quote": "Sweet are the uses of adversity.",
     "play": "As You Like It",
-    "character": "Duke Senior"
+    "character": "Duke Senior",
+    "act": "II",
+    "scene": "I"
   }
 ]

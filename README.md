@@ -46,7 +46,8 @@ If the Mac is asleep at the scheduled hour, the quote changes when it wakes.
 launchctl kickstart -k gui/$(id -u)/com.shakespeare.wallpaper       # trigger the daily agent
 ```
 
-- Quotes: `quotes.json` (`quote`, `play`, `character`). Recently shown quotes are tracked in
+- Quotes: `quotes.json` (`quote`, `play`, `character`, and optionally `act` and `scene`, shown in the
+  attribution). Recently shown quotes are tracked in
   `state.json` and skipped until every quote has been used.
 - Images: `~/Pictures/ShakespeareDaily/` (a new filename each run, since macOS caches wallpapers by path).
 - Logs: `logs/out.log`, `logs/err.log`.
@@ -73,6 +74,9 @@ Compares every entry in `quotes.json` with the
 speaker), flagging wording that isn't found, the wrong play or a different speaker. Exits with
 status 1 if anything needs review. Punctuation, line breaks and spellings like *strain’d* are
 ignored; play names must match the list in `tools/check_quotes.py`.
+
+After adding quotes, `tools/check_quotes.py --write-refs` fills in `act` and `scene` for every
+quote that passes, and later runs report a reference that doesn't match the text.
 
 All 50 included quotes pass. Three are marked `CLOSE` because they use the wording common in
 quotation and in some other editions rather than Gutenberg's text: *What a piece of work is
