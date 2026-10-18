@@ -9,6 +9,7 @@ import functools
 import logging
 import subprocess
 import sys
+from collections import Counter
 
 import objc
 import rumps
@@ -65,9 +66,9 @@ def guarded(func):
 
 
 def quote_dialog(values):
-    """Ask for quote, play and character. Returns (dict, show_now) or None if cancelled."""
+    """Ask for quote, play, character and tags. Returns (dict, show_now) or None if cancelled."""
     width = 360
-    view = NSView.alloc().initWithFrame_(NSMakeRect(0, 0, width, 200))
+    view = NSView.alloc().initWithFrame_(NSMakeRect(0, 0, width, 250))
 
     def label(text, y):
         field = NSTextField.labelWithString_(text)
@@ -84,12 +85,14 @@ def quote_dialog(values):
         view.addSubview_(field)
         return field
 
-    label("Quote", 182)
-    quote_field = entry("quote", 124, 56)
-    label("Play", 101)
-    play_field = entry("play", 75, 24)
-    label("Character", 52)
-    character_field = entry("character", 26, 24)
+    label("Quote", 231)
+    quote_field = entry("quote", 173, 56)
+    label("Play", 150)
+    play_field = entry("play", 124, 24)
+    label("Character", 101)
+    character_field = entry("character", 75, 24)
+    label("Tags (optional, comma-separated, e.g. love, time)", 52)
+    tags_field = entry("tags", 26, 24)
     show_now = NSButton.alloc().initWithFrame_(NSMakeRect(0, 0, width, 18))
     show_now.setButtonType_(NSButtonTypeSwitch)
     show_now.setTitle_("Show it now")
@@ -108,6 +111,7 @@ def quote_dialog(values):
         "quote": quote_field.stringValue(),
         "play": play_field.stringValue(),
         "character": character_field.stringValue(),
+        "tags": tags_field.stringValue(),
     }
     return quote, show_now.state() == NSControlStateValueOn
 
@@ -139,6 +143,10 @@ class ShakespeareApp(rumps.App):
         theme_menu = rumps.MenuItem("Theme")
         for item in self.theme_items.values():
             theme_menu.add(item)
+        self.filter_menu = rumps.MenuItem("Quotes From")
+        self.filter_items = {}  # None (all), ("tag", name) or ("play", name) -> menu item
+        self.quotes_mtime = None
+        self.build_filter_menu()
         self.menu = [
             self.quote_item,
             self.attribution_item,
@@ -146,6 +154,7 @@ class ShakespeareApp(rumps.App):
             rumps.MenuItem("New Quote Now", callback=self.new_quote),
             rumps.MenuItem("Add Quote…", callback=self.add_quote),
             rumps.MenuItem("Remove Current Quote…", callback=self.remove_quote),
+            self.filter_menu,
             theme_menu,
             None,
             rumps.MenuItem("Edit quotes.json…", callback=self.edit_quotes),
@@ -168,7 +177,37 @@ class ShakespeareApp(rumps.App):
         self.refresh_timer = rumps.Timer(self.refresh, 60)
         self.refresh_timer.start()
 
+    def build_filter_menu(self):
+        """(Re)build "Quotes From": All Quotes, tags by how often they're used, then plays."""
+        quotes = sw.load_quotes(sw.QUOTES_PATH)
+        self.quotes_mtime = sw.QUOTES_PATH.stat().st_mtime
+        tags = Counter(t for q in quotes for t in q.get("tags", []))
+        plays = Counter(q["play"] for q in quotes)
+
+        if self.filter_items:
+            self.filter_menu.clear()
+        self.filter_items = {None: rumps.MenuItem("All Quotes", callback=self.choose_filter)}
+        for tag, count in sorted(tags.items(), key=lambda kv: (-kv[1], kv[0])):
+            self.filter_items[("tag", tag)] = rumps.MenuItem(f"{tag.capitalize()} ({count})",
+                                                             callback=self.choose_filter)
+        play_menu = rumps.MenuItem("Play")
+        for play in sorted(plays, key=lambda p: p.removeprefix("The ").removeprefix("A ")):
+            item = rumps.MenuItem(f"{play} ({plays[play]})", callback=self.choose_filter)
+            self.filter_items[("play", play)] = item
+            play_menu.add(item)
+
+        for key, item in self.filter_items.items():
+            if key is None or key[0] == "tag":
+                self.filter_menu.add(item)
+            if key is None:
+                self.filter_menu.add(None)
+        self.filter_menu.add(None)
+        self.filter_menu.add(play_menu)
+
     def refresh(self, _=None):
+        if sw.QUOTES_PATH.stat().st_mtime != self.quotes_mtime:
+            self.build_filter_menu()
+            self.state_mtime = None  # re-apply checkmarks to the new items
         try:
             mtime = sw.STATE_PATH.stat().st_mtime
         except FileNotFoundError:
@@ -179,6 +218,10 @@ class ShakespeareApp(rumps.App):
         theme = sw.get_theme()
         for name, item in self.theme_items.items():
             item.state = int(name == theme)
+        quote_filter = sw.get_filter()
+        selected = next(iter(quote_filter.items())) if quote_filter else None
+        for key, item in self.filter_items.items():
+            item.state = int(key == selected)
         quote = sw.current_quote()
         if quote:
             self.quote_item.title = truncate(f"“{quote['quote']}”")
@@ -236,6 +279,14 @@ class ShakespeareApp(rumps.App):
     def open_folder(self, _):
         sw.OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
         subprocess.run(["open", str(sw.OUTPUT_DIR)])
+
+    @guarded
+    def choose_filter(self, sender):
+        key = next(k for k, item in self.filter_items.items() if item is sender)
+        sw.set_filter(dict([key]) if key else None)
+        log.info("Quotes from %s", key or "all")
+        sw.next_quote()
+        self.refresh()
 
     @guarded
     def choose_theme(self, sender):

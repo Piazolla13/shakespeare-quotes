@@ -43,12 +43,15 @@ If the Mac is asleep at the scheduled hour, the quote changes when it wakes.
 ```sh
 .venv/bin/python shakespeare_wallpaper.py                           # new quote now
 .venv/bin/python shakespeare_wallpaper.py --dry-run --output /tmp/x # render only
+.venv/bin/python shakespeare_wallpaper.py --only tag:love           # from now on, only love quotes
+.venv/bin/python shakespeare_wallpaper.py --only "play:King Lear"   # ... or one play; --only all to reset
 launchctl kickstart -k gui/$(id -u)/com.shakespeare.wallpaper       # trigger the daily agent
 ```
 
-- Quotes: `quotes.json` (`quote`, `play`, `character`, and optionally `act` and `scene`, shown in the
-  attribution). Recently shown quotes are tracked in
-  `state.json` and skipped until every quote has been used.
+- Quotes: `quotes.json` — 214 quotes from 36 plays, each with `quote`, `play`, `character` and
+  optionally `act` and `scene` (shown in the attribution) and `tags` (27 themes such as love,
+  death, fate, time, ambition). Recently shown quotes are tracked in `state.json` and skipped
+  until every quote (that matches the `--only` filter) has been shown.
 - Images: `~/Pictures/ShakespeareDaily/` (a new filename each run, since macOS caches wallpapers by path).
 - Logs: `logs/out.log`, `logs/err.log`.
 
@@ -70,7 +73,8 @@ stands out less on `parchment`.
 ## Menu bar app
 
 `menubar.py` adds a ❦ icon to the menu bar: shows the current quote, **New Quote Now**,
-**Add Quote…**, **Remove Current Quote…**, **Theme**, **Edit quotes.json…**, **Open Wallpaper Folder**.
+**Add Quote…** (with optional tags), **Remove Current Quote…**, **Quotes From** (all quotes, a tag
+or a play), **Theme**, **Edit quotes.json…**, **Open Wallpaper Folder**.
 It also redraws the wallpaper when a display is connected or removed. The daily change above
 keeps working whether or not the app is running.
 
@@ -93,10 +97,10 @@ ignored; play names must match the list in `tools/check_quotes.py`.
 After adding quotes, `tools/check_quotes.py --write-refs` fills in `act` and `scene` for every
 quote that passes, and later runs report a reference that doesn't match the text.
 
-All 50 included quotes pass. Three are marked `CLOSE` because they use the wording common in
-quotation and in some other editions rather than Gutenberg's text: *What a piece of work is
-**a** man* (Gutenberg: "is man"), *by any other **word*** ("name") and *this **sun** of York*
-("son", the line puns on both).
+All 214 included quotes pass. Five are marked `CLOSE`: three use the wording common in quotation
+and in some other editions rather than Gutenberg's text — *What a piece of work is **a** man*
+(Gutenberg: "is man"), *by any other **word*** ("name") and *this **sun** of York* ("son", the
+line puns on both) — and two use modern spelling (*bedfellows*, *to untie*).
 
 ## Development
 

@@ -51,9 +51,9 @@ def test_pick_quote_shows_every_quote_before_repeating():
 # add_quote / remove_quote
 
 def test_add_quote_strips_and_appends(project):
-    added = sw.add_quote({"quote": "  Men at some time are masters of their fates. ",
+    added = sw.add_quote({"quote": "  A line the Bard never wrote. ",
                           "play": " Julius Caesar", "character": "Cassius "})
-    assert added == quote("Men at some time are masters of their fates.", "Julius Caesar", "Cassius")
+    assert added == quote("A line the Bard never wrote.", "Julius Caesar", "Cassius")
     assert sw.load_quotes(sw.QUOTES_PATH)[-1] == added
 
 
@@ -114,3 +114,53 @@ def test_write_json_failure_keeps_original(tmp_path, monkeypatch):
 
     assert json.loads(path.read_text()) == {"a": 1}
     assert [p.name for p in tmp_path.iterdir()] == ["data.json"]
+
+
+# tags and filters
+
+def test_load_quotes_rejects_bad_tags(tmp_path):
+    path = tmp_path / "q.json"
+    path.write_text(json.dumps([{**quote("x"), "tags": "love"}]))
+    with pytest.raises(ValueError, match="tags"):
+        sw.load_quotes(path)
+
+
+def test_parse_tags():
+    assert sw.parse_tags(" Love, time ,love,, ") == ["love", "time"]
+    assert sw.parse_tags(["Grief"]) == ["grief"]
+    assert sw.parse_tags("") == []
+
+
+def test_add_quote_saves_tags_only_when_given(project):
+    tagged = sw.add_quote({**quote("Tagged line."), "tags": "Love, time"})
+    untagged = sw.add_quote({**quote("Untagged line."), "tags": " "})
+    assert tagged["tags"] == ["love", "time"]
+    assert "tags" not in untagged
+
+
+def test_pick_quote_respects_filter_and_its_own_rounds():
+    random.seed(1)
+    quotes = [{**quote(f"love {i}"), "tags": ["love"]} for i in range(3)] + [quote(f"other {i}") for i in range(3)]
+    state = {"recent": ["other 0"], "filter": {"tag": "love"}}
+    picks = [sw.pick_quote(quotes, state)["quote"] for _ in range(3)]
+    assert sorted(picks) == ["love 0", "love 1", "love 2"]
+
+    sw.pick_quote(quotes, state)  # love quotes exhausted: new round for them only
+    assert "other 0" in state["recent"] and len(state["recent"]) == 2
+
+    state["filter"] = {"play": "Macbeth"}  # matches nothing: fall back to all quotes
+    assert sw.pick_quote(quotes, state) in quotes
+
+
+def test_set_filter(project):
+    sw.set_filter({"play": "Hamlet"})
+    assert sw.get_filter() == {"play": "Hamlet"}
+    sw.set_filter(None)
+    assert sw.get_filter() is None
+    with pytest.raises(ValueError):
+        sw.set_filter({"colour": "red"})
+
+
+def test_real_quotes_tags_are_lowercase_words():
+    for q in sw.load_quotes(REAL_QUOTES):
+        assert all(t == t.lower() and t.isalpha() for t in q.get("tags", [])), q

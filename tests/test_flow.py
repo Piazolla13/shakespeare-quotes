@@ -99,3 +99,24 @@ def test_menubar_theme_menu_saves_and_redraws(project, fake_screens):
     assert len(fake_screens) == 2  # current quote redrawn on both screens
     assert [n for n, item in app.theme_items.items() if item.state] == ["parchment"]
     assert sw.current_quote() == QUOTE
+
+
+def test_menubar_quotes_from_menu(project, fake_screens):
+    app = menubar.ShakespeareApp()
+    assert ("tag", "love") in app.filter_items and ("play", "Hamlet") in app.filter_items
+
+    app.choose_filter(app.filter_items[("play", "Hamlet")])
+    assert sw.get_filter() == {"play": "Hamlet"}
+    assert sw.current_quote()["play"] == "Hamlet"
+    assert [k for k, item in app.filter_items.items() if item.state] == [("play", "Hamlet")]
+
+    app.choose_filter(app.filter_items[None])
+    assert sw.get_filter() is None
+
+
+def test_menubar_rebuilds_filter_menu_after_quotes_change(project, fake_screens):
+    app = menubar.ShakespeareApp()
+    sw.add_quote({"quote": "A brand new line.", "play": "Pericles", "character": "Gower", "tags": "brandnew"})
+    app.quotes_mtime = None  # file mtime resolution can hide a change made in the same second
+    app.refresh()
+    assert ("tag", "brandnew") in app.filter_items

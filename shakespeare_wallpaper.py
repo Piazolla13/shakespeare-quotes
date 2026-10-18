@@ -71,6 +71,9 @@ def load_quotes(path):
         missing = {"quote", "play", "character"} - q.keys()
         if missing:
             raise ValueError(f"Quote #{i} in {path} is missing {sorted(missing)}")
+        tags = q.get("tags", [])
+        if not isinstance(tags, list) or not all(isinstance(t, str) and t for t in tags):
+            raise ValueError(f"Quote #{i} in {path}: tags must be a list of words")
     if not quotes:
         raise ValueError(f"No quotes in {path}")
     return quotes
@@ -105,10 +108,13 @@ def save_state(path, state):
 def add_quote(quote, path=None):
     """Validate and append a quote dict; raises ValueError with a user-facing message."""
     path = path or QUOTES_PATH
+    tags = parse_tags(quote.get("tags", []))
     quote = {key: str(quote.get(key, "")).strip() for key in ("quote", "play", "character")}
     empty = [key for key, value in quote.items() if not value]
     if empty:
         raise ValueError(f"Please fill in: {', '.join(empty)}")
+    if tags:
+        quote["tags"] = tags
     quotes = load_quotes(path)
     if any(q["quote"].casefold() == quote["quote"].casefold() for q in quotes):
         raise ValueError("That quote is already in the list.")
@@ -131,13 +137,46 @@ def remove_quote(text, path=None, state_path=None):
     save_state(state_path, state)
 
 
+def parse_tags(tags):
+    """Tags from a list or a comma-separated string, lower-cased, without duplicates."""
+    if isinstance(tags, str):
+        tags = tags.split(",")
+    return list(dict.fromkeys(t.strip().lower() for t in tags if t.strip()))
+
+
+def matches_filter(quote, quote_filter):
+    if not quote_filter:
+        return True
+    if "tag" in quote_filter:
+        return quote_filter["tag"] in quote.get("tags", [])
+    return quote["play"] == quote_filter.get("play")
+
+
+def get_filter():
+    """Saved "quotes from" filter: None (all quotes), {"tag": ...} or {"play": ...}."""
+    return load_state(STATE_PATH).get("filter")
+
+
+def set_filter(quote_filter):
+    if quote_filter is not None and (len(quote_filter) != 1 or not {"tag", "play"} & quote_filter.keys()):
+        raise ValueError(f"Invalid filter {quote_filter!r}")
+    state = load_state(STATE_PATH)
+    if quote_filter:
+        state["filter"] = quote_filter
+    else:
+        state.pop("filter", None)
+    save_state(STATE_PATH, state)
+
+
 def pick_quote(quotes, state):
-    """Random quote not shown since the list was last exhausted."""
+    """Random quote not shown since every quote (that matches the filter) was last shown."""
+    pool = [q for q in quotes if matches_filter(q, state.get("filter"))] or quotes
     recent = set(state.get("recent", []))
-    candidates = [q for q in quotes if q["quote"] not in recent]
+    candidates = [q for q in pool if q["quote"] not in recent]
     if not candidates:
-        candidates = quotes
-        state["recent"] = []
+        candidates = pool
+        pool_texts = {q["quote"] for q in pool}
+        state["recent"] = [t for t in state.get("recent", []) if t not in pool_texts]
     quote = random.choice(candidates)
     state["recent"] = state.get("recent", []) + [quote["quote"]]
     return quote
@@ -328,9 +367,11 @@ def show_quote(quote, output_dir=None, dry_run=False, state=None, theme=None):
     return quote
 
 
-def next_quote(output_dir=None, dry_run=False, theme=None):
-    """Pick a fresh quote and show it."""
+def next_quote(output_dir=None, dry_run=False, theme=None, quote_filter=None):
+    """Pick a fresh quote and show it; quote_filter overrides the saved filter for this pick."""
     state = load_state(STATE_PATH)
+    if quote_filter is not None:
+        state["filter"] = quote_filter or None
     quote = pick_quote(load_quotes(QUOTES_PATH), state)
     return show_quote(quote, output_dir, dry_run, state, theme)
 
@@ -346,14 +387,31 @@ def main():
     parser.add_argument("--output", type=Path, default=OUTPUT_DIR, help="directory for images")
     parser.add_argument("--theme", choices=THEME_CHOICES,
                         help="use this theme from now on (with --dry-run: for this render only)")
+    parser.add_argument("--only", metavar="FILTER",
+                        help='from now on pick quotes from "tag:NAME", "play:NAME" or "all" '
+                             "(with --dry-run: for this pick only)")
     args = parser.parse_args()
+
+    quote_filter = None
+    if args.only:
+        kind, _, value = args.only.partition(":")
+        if args.only == "all":
+            quote_filter = {}
+        elif kind in ("tag", "play") and value:
+            quote_filter = {kind: value.lower() if kind == "tag" else value}
+            if not any(matches_filter(q, quote_filter) for q in load_quotes(QUOTES_PATH)):
+                parser.error(f"no quotes match {args.only!r}")
+        else:
+            parser.error('--only takes "tag:NAME", "play:NAME" or "all"')
 
     logging.basicConfig(level=logging.INFO, stream=sys.stdout,
                         format="%(asctime)s %(levelname)s %(message)s")
 
     if args.theme and not args.dry_run:
         set_theme(args.theme)
-    next_quote(args.output, args.dry_run, args.theme)
+    if quote_filter is not None and not args.dry_run:
+        set_filter(quote_filter or None)
+    next_quote(args.output, args.dry_run, args.theme, quote_filter)
 
 
 if __name__ == "__main__":

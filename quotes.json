@@ -4,349 +4,2234 @@
     "play": "The Tempest",
     "character": "Prospero",
     "act": "IV",
-    "scene": "I"
+    "scene": "I",
+    "tags": [
+      "dreams",
+      "sleep"
+    ]
   },
   {
     "quote": "This above all: to thine own self be true.",
     "play": "Hamlet",
     "character": "Polonius",
     "act": "I",
-    "scene": "III"
+    "scene": "III",
+    "tags": [
+      "self",
+      "wisdom"
+    ]
   },
   {
     "quote": "All the world's a stage, and all the men and women merely players.",
     "play": "As You Like It",
     "character": "Jaques",
     "act": "II",
-    "scene": "VII"
+    "scene": "VII",
+    "tags": [
+      "time",
+      "self"
+    ]
   },
   {
     "quote": "The course of true love never did run smooth.",
     "play": "A Midsummer Night's Dream",
     "character": "Lysander",
     "act": "I",
-    "scene": "I"
+    "scene": "I",
+    "tags": [
+      "love"
+    ]
   },
   {
     "quote": "Lord, what fools these mortals be!",
     "play": "A Midsummer Night's Dream",
     "character": "Puck",
     "act": "III",
-    "scene": "II"
+    "scene": "II",
+    "tags": [
+      "folly",
+      "love"
+    ]
   },
   {
     "quote": "Love looks not with the eyes, but with the mind, and therefore is winged Cupid painted blind.",
     "play": "A Midsummer Night's Dream",
     "character": "Helena",
     "act": "I",
-    "scene": "I"
+    "scene": "I",
+    "tags": [
+      "love"
+    ]
   },
   {
     "quote": "To be, or not to be, that is the question.",
     "play": "Hamlet",
     "character": "Hamlet",
     "act": "III",
-    "scene": "I"
+    "scene": "I",
+    "tags": [
+      "death",
+      "self"
+    ]
   },
   {
     "quote": "There is nothing either good or bad, but thinking makes it so.",
     "play": "Hamlet",
     "character": "Hamlet",
     "act": "II",
-    "scene": "II"
+    "scene": "II",
+    "tags": [
+      "wisdom"
+    ]
   },
   {
     "quote": "There are more things in heaven and earth, Horatio, than are dreamt of in your philosophy.",
     "play": "Hamlet",
     "character": "Hamlet",
     "act": "I",
-    "scene": "V"
+    "scene": "V",
+    "tags": [
+      "wisdom",
+      "dreams"
+    ]
   },
   {
     "quote": "Brevity is the soul of wit.",
     "play": "Hamlet",
     "character": "Polonius",
     "act": "II",
-    "scene": "II"
+    "scene": "II",
+    "tags": [
+      "words",
+      "wisdom"
+    ]
   },
   {
     "quote": "The readiness is all.",
     "play": "Hamlet",
     "character": "Hamlet",
     "act": "V",
-    "scene": "II"
+    "scene": "II",
+    "tags": [
+      "fate",
+      "death"
+    ]
   },
   {
     "quote": "The rest is silence.",
     "play": "Hamlet",
     "character": "Hamlet",
     "act": "V",
-    "scene": "II"
+    "scene": "II",
+    "tags": [
+      "death"
+    ]
   },
   {
     "quote": "What a piece of work is a man!",
     "play": "Hamlet",
     "character": "Hamlet",
     "act": "II",
-    "scene": "II"
+    "scene": "II",
+    "tags": [
+      "self"
+    ]
   },
   {
     "quote": "What's in a name? That which we call a rose by any other word would smell as sweet.",
     "play": "Romeo and Juliet",
     "character": "Juliet",
     "act": "II",
-    "scene": "II"
+    "scene": "II",
+    "tags": [
+      "love",
+      "words"
+    ]
   },
   {
     "quote": "Parting is such sweet sorrow.",
     "play": "Romeo and Juliet",
     "character": "Juliet",
     "act": "II",
-    "scene": "II"
+    "scene": "II",
+    "tags": [
+      "love"
+    ]
   },
   {
     "quote": "These violent delights have violent ends.",
     "play": "Romeo and Juliet",
     "character": "Friar Laurence",
     "act": "II",
-    "scene": "VI"
+    "scene": "VI",
+    "tags": [
+      "love",
+      "fate"
+    ]
   },
   {
     "quote": "Wisely and slow; they stumble that run fast.",
     "play": "Romeo and Juliet",
     "character": "Friar Laurence",
     "act": "II",
-    "scene": "III"
+    "scene": "III",
+    "tags": [
+      "wisdom"
+    ]
   },
   {
     "quote": "My bounty is as boundless as the sea, my love as deep; the more I give to thee, the more I have, for both are infinite.",
     "play": "Romeo and Juliet",
     "character": "Juliet",
     "act": "II",
-    "scene": "II"
+    "scene": "II",
+    "tags": [
+      "love"
+    ]
   },
   {
     "quote": "Tomorrow, and tomorrow, and tomorrow, creeps in this petty pace from day to day.",
     "play": "Macbeth",
     "character": "Macbeth",
     "act": "V",
-    "scene": "V"
+    "scene": "V",
+    "tags": [
+      "time",
+      "death"
+    ]
   },
   {
     "quote": "Life's but a walking shadow, a poor player that struts and frets his hour upon the stage.",
     "play": "Macbeth",
     "character": "Macbeth",
     "act": "V",
-    "scene": "V"
+    "scene": "V",
+    "tags": [
+      "death",
+      "time"
+    ]
   },
   {
     "quote": "What's done cannot be undone.",
     "play": "Macbeth",
     "character": "Lady Macbeth",
     "act": "V",
-    "scene": "I"
+    "scene": "I",
+    "tags": [
+      "guilt"
+    ]
   },
   {
     "quote": "Fair is foul, and foul is fair.",
     "play": "Macbeth",
     "character": "The Witches",
     "act": "I",
-    "scene": "I"
+    "scene": "I",
+    "tags": [
+      "fate",
+      "deceit"
+    ]
   },
   {
     "quote": "Look like the innocent flower, but be the serpent under it.",
     "play": "Macbeth",
     "character": "Lady Macbeth",
     "act": "I",
-    "scene": "V"
+    "scene": "V",
+    "tags": [
+      "deceit",
+      "ambition"
+    ]
   },
   {
     "quote": "The fault, dear Brutus, is not in our stars, but in ourselves.",
     "play": "Julius Caesar",
     "character": "Cassius",
     "act": "I",
-    "scene": "II"
+    "scene": "II",
+    "tags": [
+      "fate",
+      "self"
+    ]
   },
   {
     "quote": "Cowards die many times before their deaths; the valiant never taste of death but once.",
     "play": "Julius Caesar",
     "character": "Julius Caesar",
     "act": "II",
-    "scene": "II"
+    "scene": "II",
+    "tags": [
+      "courage",
+      "death"
+    ]
   },
   {
     "quote": "There is a tide in the affairs of men, which, taken at the flood, leads on to fortune.",
     "play": "Julius Caesar",
     "character": "Brutus",
     "act": "IV",
-    "scene": "III"
+    "scene": "III",
+    "tags": [
+      "fate",
+      "time"
+    ]
   },
   {
     "quote": "Friends, Romans, countrymen, lend me your ears.",
     "play": "Julius Caesar",
     "character": "Mark Antony",
     "act": "III",
-    "scene": "II"
+    "scene": "II",
+    "tags": [
+      "words"
+    ]
   },
   {
     "quote": "Some are born great, some achieve greatness, and some have greatness thrust upon 'em.",
     "play": "Twelfth Night",
     "character": "Malvolio",
     "act": "II",
-    "scene": "V"
+    "scene": "V",
+    "tags": [
+      "ambition",
+      "fate"
+    ]
   },
   {
     "quote": "If music be the food of love, play on.",
     "play": "Twelfth Night",
     "character": "Orsino",
     "act": "I",
-    "scene": "I"
+    "scene": "I",
+    "tags": [
+      "music",
+      "love"
+    ]
   },
   {
     "quote": "Better a witty fool than a foolish wit.",
     "play": "Twelfth Night",
     "character": "Feste",
     "act": "I",
-    "scene": "V"
+    "scene": "V",
+    "tags": [
+      "folly",
+      "wisdom"
+    ]
   },
   {
     "quote": "How sharper than a serpent's tooth it is to have a thankless child!",
     "play": "King Lear",
     "character": "King Lear",
     "act": "I",
-    "scene": "IV"
+    "scene": "IV",
+    "tags": [
+      "grief"
+    ]
   },
   {
     "quote": "Nothing will come of nothing.",
     "play": "King Lear",
     "character": "King Lear",
     "act": "I",
-    "scene": "I"
+    "scene": "I",
+    "tags": [
+      "wisdom"
+    ]
   },
   {
     "quote": "The weight of this sad time we must obey, speak what we feel, not what we ought to say.",
     "play": "King Lear",
     "character": "Edgar",
     "act": "V",
-    "scene": "III"
+    "scene": "III",
+    "tags": [
+      "grief",
+      "words"
+    ]
   },
   {
     "quote": "O brave new world, that has such people in't!",
     "play": "The Tempest",
     "character": "Miranda",
     "act": "V",
-    "scene": "I"
+    "scene": "I",
+    "tags": [
+      "joy"
+    ]
   },
   {
     "quote": "Hell is empty, and all the devils are here.",
     "play": "The Tempest",
     "character": "Ariel",
     "act": "I",
-    "scene": "II"
+    "scene": "II",
+    "tags": [
+      "deceit"
+    ]
   },
   {
     "quote": "What's past is prologue.",
     "play": "The Tempest",
     "character": "Antonio",
     "act": "II",
-    "scene": "I"
+    "scene": "I",
+    "tags": [
+      "time",
+      "fate"
+    ]
   },
   {
     "quote": "O, beware, my lord, of jealousy; it is the green-eyed monster.",
     "play": "Othello",
     "character": "Iago",
     "act": "III",
-    "scene": "III"
+    "scene": "III",
+    "tags": [
+      "jealousy"
+    ]
   },
   {
     "quote": "Reputation is an idle and most false imposition, oft got without merit and lost without deserving.",
     "play": "Othello",
     "character": "Iago",
     "act": "II",
-    "scene": "III"
+    "scene": "III",
+    "tags": [
+      "honour"
+    ]
   },
   {
     "quote": "The quality of mercy is not strained; it droppeth as the gentle rain from heaven.",
     "play": "The Merchant of Venice",
     "character": "Portia",
     "act": "IV",
-    "scene": "I"
+    "scene": "I",
+    "tags": [
+      "mercy"
+    ]
   },
   {
     "quote": "All that glisters is not gold.",
     "play": "The Merchant of Venice",
     "character": "Prince of Morocco",
     "act": "II",
-    "scene": "VII"
+    "scene": "VII",
+    "tags": [
+      "deceit",
+      "wisdom"
+    ]
   },
   {
     "quote": "How far that little candle throws his beams! So shines a good deed in a naughty world.",
     "play": "The Merchant of Venice",
     "character": "Portia",
     "act": "V",
-    "scene": "I"
+    "scene": "I",
+    "tags": [
+      "mercy"
+    ]
   },
   {
     "quote": "We few, we happy few, we band of brothers.",
     "play": "Henry V",
     "character": "King Henry",
     "act": "IV",
-    "scene": "III"
+    "scene": "III",
+    "tags": [
+      "war",
+      "friendship"
+    ]
   },
   {
     "quote": "Once more unto the breach, dear friends, once more.",
     "play": "Henry V",
     "character": "King Henry",
     "act": "III",
-    "scene": "I"
+    "scene": "I",
+    "tags": [
+      "war",
+      "courage"
+    ]
   },
   {
     "quote": "Uneasy lies the head that wears a crown.",
     "play": "Henry IV, Part 2",
     "character": "King Henry IV",
     "act": "III",
-    "scene": "I"
+    "scene": "I",
+    "tags": [
+      "power"
+    ]
   },
   {
     "quote": "The better part of valour is discretion.",
     "play": "Henry IV, Part 1",
     "character": "Falstaff",
     "act": "V",
-    "scene": "IV"
+    "scene": "IV",
+    "tags": [
+      "courage",
+      "folly"
+    ]
   },
   {
     "quote": "Now is the winter of our discontent made glorious summer by this sun of York.",
     "play": "Richard III",
     "character": "Richard",
     "act": "I",
-    "scene": "I"
+    "scene": "I",
+    "tags": [
+      "ambition",
+      "power"
+    ]
   },
   {
     "quote": "Love all, trust a few, do wrong to none.",
     "play": "All's Well That Ends Well",
     "character": "Countess",
     "act": "I",
-    "scene": "I"
+    "scene": "I",
+    "tags": [
+      "wisdom",
+      "love"
+    ]
   },
   {
     "quote": "Our doubts are traitors, and make us lose the good we oft might win by fearing to attempt.",
     "play": "Measure for Measure",
     "character": "Lucio",
     "act": "I",
-    "scene": "IV"
+    "scene": "IV",
+    "tags": [
+      "courage"
+    ]
   },
   {
     "quote": "The fool doth think he is wise, but the wise man knows himself to be a fool.",
     "play": "As You Like It",
     "character": "Touchstone",
     "act": "V",
-    "scene": "I"
+    "scene": "I",
+    "tags": [
+      "folly",
+      "wisdom"
+    ]
   },
   {
     "quote": "Sweet are the uses of adversity.",
     "play": "As You Like It",
     "character": "Duke Senior",
     "act": "II",
+    "scene": "I",
+    "tags": [
+      "grief",
+      "nature"
+    ]
+  },
+  {
+    "quote": "Frailty, thy name is woman!",
+    "play": "Hamlet",
+    "character": "Hamlet",
+    "tags": [
+      "grief"
+    ],
+    "act": "I",
+    "scene": "II"
+  },
+  {
+    "quote": "Something is rotten in the state of Denmark.",
+    "play": "Hamlet",
+    "character": "Marcellus",
+    "tags": [
+      "power",
+      "deceit"
+    ],
+    "act": "I",
+    "scene": "IV"
+  },
+  {
+    "quote": "Neither a borrower nor a lender be.",
+    "play": "Hamlet",
+    "character": "Polonius",
+    "tags": [
+      "wisdom"
+    ],
+    "act": "I",
+    "scene": "III"
+  },
+  {
+    "quote": "Give every man thine ear, but few thy voice.",
+    "play": "Hamlet",
+    "character": "Polonius",
+    "tags": [
+      "wisdom",
+      "words"
+    ],
+    "act": "I",
+    "scene": "III"
+  },
+  {
+    "quote": "The lady protests too much, methinks.",
+    "play": "Hamlet",
+    "character": "Gertrude",
+    "tags": [
+      "deceit",
+      "words"
+    ],
+    "act": "III",
+    "scene": "II"
+  },
+  {
+    "quote": "Though this be madness, yet there is method in't.",
+    "play": "Hamlet",
+    "character": "Polonius",
+    "tags": [
+      "madness"
+    ],
+    "act": "II",
+    "scene": "II"
+  },
+  {
+    "quote": "I must be cruel only to be kind.",
+    "play": "Hamlet",
+    "character": "Hamlet",
+    "tags": [
+      "love"
+    ],
+    "act": "III",
+    "scene": "IV"
+  },
+  {
+    "quote": "Words, words, words.",
+    "play": "Hamlet",
+    "character": "Hamlet",
+    "tags": [
+      "words"
+    ],
+    "act": "II",
+    "scene": "II"
+  },
+  {
+    "quote": "The play's the thing wherein I'll catch the conscience of the king.",
+    "play": "Hamlet",
+    "character": "Hamlet",
+    "tags": [
+      "guilt"
+    ],
+    "act": "II",
+    "scene": "II"
+  },
+  {
+    "quote": "Alas, poor Yorick! I knew him, Horatio.",
+    "play": "Hamlet",
+    "character": "Hamlet",
+    "tags": [
+      "death"
+    ],
+    "act": "V",
+    "scene": "I"
+  },
+  {
+    "quote": "Good night, sweet prince, and flights of angels sing thee to thy rest.",
+    "play": "Hamlet",
+    "character": "Horatio",
+    "tags": [
+      "death",
+      "friendship"
+    ],
+    "act": "V",
+    "scene": "II"
+  },
+  {
+    "quote": "There's a divinity that shapes our ends, rough-hew them how we will.",
+    "play": "Hamlet",
+    "character": "Hamlet",
+    "tags": [
+      "fate"
+    ],
+    "act": "V",
+    "scene": "II"
+  },
+  {
+    "quote": "One may smile, and smile, and be a villain.",
+    "play": "Hamlet",
+    "character": "Hamlet",
+    "tags": [
+      "deceit"
+    ],
+    "act": "I",
+    "scene": "V"
+  },
+  {
+    "quote": "To sleep, perchance to dream; ay, there's the rub.",
+    "play": "Hamlet",
+    "character": "Hamlet",
+    "tags": [
+      "death",
+      "dreams",
+      "sleep"
+    ],
+    "act": "III",
+    "scene": "I"
+  },
+  {
+    "quote": "Conscience does make cowards of us all.",
+    "play": "Hamlet",
+    "character": "Hamlet",
+    "tags": [
+      "guilt",
+      "courage"
+    ],
+    "act": "III",
+    "scene": "I"
+  },
+  {
+    "quote": "When sorrows come, they come not single spies, but in battalions.",
+    "play": "Hamlet",
+    "character": "Claudius",
+    "tags": [
+      "grief"
+    ],
+    "act": "IV",
+    "scene": "V"
+  },
+  {
+    "quote": "My words fly up, my thoughts remain below. Words without thoughts never to heaven go.",
+    "play": "Hamlet",
+    "character": "Claudius",
+    "tags": [
+      "guilt",
+      "words"
+    ],
+    "act": "III",
+    "scene": "III"
+  },
+  {
+    "quote": "How weary, stale, flat, and unprofitable seem to me all the uses of this world!",
+    "play": "Hamlet",
+    "character": "Hamlet",
+    "tags": [
+      "grief"
+    ],
+    "act": "I",
+    "scene": "II"
+  },
+  {
+    "quote": "I could be bounded in a nutshell and count myself a king of infinite space, were it not that I have bad dreams.",
+    "play": "Hamlet",
+    "character": "Hamlet",
+    "tags": [
+      "dreams"
+    ],
+    "act": "II",
+    "scene": "II"
+  },
+  {
+    "quote": "We know what we are, but know not what we may be.",
+    "play": "Hamlet",
+    "character": "Ophelia",
+    "tags": [
+      "self",
+      "fate"
+    ],
+    "act": "IV",
+    "scene": "V"
+  },
+  {
+    "quote": "The time is out of joint. O cursed spite, that ever I was born to set it right!",
+    "play": "Hamlet",
+    "character": "Hamlet",
+    "tags": [
+      "time",
+      "fate"
+    ],
+    "act": "I",
+    "scene": "V"
+  },
+  {
+    "quote": "Out, damned spot! out, I say!",
+    "play": "Macbeth",
+    "character": "Lady Macbeth",
+    "tags": [
+      "guilt"
+    ],
+    "act": "V",
+    "scene": "I"
+  },
+  {
+    "quote": "Is this a dagger which I see before me, the handle toward my hand?",
+    "play": "Macbeth",
+    "character": "Macbeth",
+    "tags": [
+      "ambition",
+      "madness"
+    ],
+    "act": "II",
+    "scene": "I"
+  },
+  {
+    "quote": "Double, double toil and trouble; fire burn and cauldron bubble.",
+    "play": "Macbeth",
+    "character": "The Witches",
+    "tags": [
+      "fate"
+    ],
+    "act": "IV",
+    "scene": "I"
+  },
+  {
+    "quote": "By the pricking of my thumbs, something wicked this way comes.",
+    "play": "Macbeth",
+    "character": "Second Witch",
+    "tags": [
+      "fate",
+      "deceit"
+    ],
+    "act": "IV",
+    "scene": "I"
+  },
+  {
+    "quote": "Stars, hide your fires; let not light see my black and deep desires.",
+    "play": "Macbeth",
+    "character": "Macbeth",
+    "tags": [
+      "ambition"
+    ],
+    "act": "I",
+    "scene": "IV"
+  },
+  {
+    "quote": "I have no spur to prick the sides of my intent, but only vaulting ambition, which o'erleaps itself.",
+    "play": "Macbeth",
+    "character": "Macbeth",
+    "tags": [
+      "ambition"
+    ],
+    "act": "I",
+    "scene": "VII"
+  },
+  {
+    "quote": "Screw your courage to the sticking-place, and we'll not fail.",
+    "play": "Macbeth",
+    "character": "Lady Macbeth",
+    "tags": [
+      "courage",
+      "ambition"
+    ],
+    "act": "I",
+    "scene": "VII"
+  },
+  {
+    "quote": "Sleep that knits up the ravell'd sleave of care.",
+    "play": "Macbeth",
+    "character": "Macbeth",
+    "tags": [
+      "sleep"
+    ],
+    "act": "II",
+    "scene": "II"
+  },
+  {
+    "quote": "Macbeth does murder sleep.",
+    "play": "Macbeth",
+    "character": "Macbeth",
+    "tags": [
+      "sleep",
+      "guilt"
+    ],
+    "act": "II",
+    "scene": "II"
+  },
+  {
+    "quote": "Will all great Neptune's ocean wash this blood clean from my hand?",
+    "play": "Macbeth",
+    "character": "Macbeth",
+    "tags": [
+      "guilt"
+    ],
+    "act": "II",
+    "scene": "II"
+  },
+  {
+    "quote": "All the perfumes of Arabia will not sweeten this little hand.",
+    "play": "Macbeth",
+    "character": "Lady Macbeth",
+    "tags": [
+      "guilt"
+    ],
+    "act": "V",
+    "scene": "I"
+  },
+  {
+    "quote": "There's daggers in men's smiles.",
+    "play": "Macbeth",
+    "character": "Donalbain",
+    "tags": [
+      "deceit"
+    ],
+    "act": "II",
+    "scene": "III"
+  },
+  {
+    "quote": "Things without all remedy should be without regard: what's done is done.",
+    "play": "Macbeth",
+    "character": "Lady Macbeth",
+    "tags": [
+      "wisdom"
+    ],
+    "act": "III",
+    "scene": "II"
+  },
+  {
+    "quote": "Out, out, brief candle!",
+    "play": "Macbeth",
+    "character": "Macbeth",
+    "tags": [
+      "death",
+      "time"
+    ],
+    "act": "V",
+    "scene": "V"
+  },
+  {
+    "quote": "It is a tale told by an idiot, full of sound and fury, signifying nothing.",
+    "play": "Macbeth",
+    "character": "Macbeth",
+    "tags": [
+      "death"
+    ],
+    "act": "V",
+    "scene": "V"
+  },
+  {
+    "quote": "So foul and fair a day I have not seen.",
+    "play": "Macbeth",
+    "character": "Macbeth",
+    "tags": [
+      "fate"
+    ],
+    "act": "I",
+    "scene": "III"
+  },
+  {
+    "quote": "Come what come may, time and the hour runs through the roughest day.",
+    "play": "Macbeth",
+    "character": "Macbeth",
+    "tags": [
+      "time",
+      "fate"
+    ],
+    "act": "I",
+    "scene": "III"
+  },
+  {
+    "quote": "Give sorrow words; the grief that does not speak whispers the o'er-fraught heart and bids it break.",
+    "play": "Macbeth",
+    "character": "Malcolm",
+    "tags": [
+      "grief",
+      "words"
+    ],
+    "act": "IV",
+    "scene": "III"
+  },
+  {
+    "quote": "The night is long that never finds the day.",
+    "play": "Macbeth",
+    "character": "Malcolm",
+    "tags": [
+      "courage"
+    ],
+    "act": "IV",
+    "scene": "III"
+  },
+  {
+    "quote": "But soft, what light through yonder window breaks? It is the east, and Juliet is the sun.",
+    "play": "Romeo and Juliet",
+    "character": "Romeo",
+    "tags": [
+      "love"
+    ],
+    "act": "II",
+    "scene": "II"
+  },
+  {
+    "quote": "O Romeo, Romeo, wherefore art thou Romeo?",
+    "play": "Romeo and Juliet",
+    "character": "Juliet",
+    "tags": [
+      "love"
+    ],
+    "act": "II",
+    "scene": "II"
+  },
+  {
+    "quote": "A plague o' both your houses!",
+    "play": "Romeo and Juliet",
+    "character": "Mercutio",
+    "tags": [
+      "death"
+    ],
+    "act": "III",
+    "scene": "I"
+  },
+  {
+    "quote": "Did my heart love till now? Forswear it, sight! For I ne'er saw true beauty till this night.",
+    "play": "Romeo and Juliet",
+    "character": "Romeo",
+    "tags": [
+      "love"
+    ],
+    "act": "I",
+    "scene": "V"
+  },
+  {
+    "quote": "Love is a smoke made with the fume of sighs.",
+    "play": "Romeo and Juliet",
+    "character": "Romeo",
+    "tags": [
+      "love"
+    ],
+    "act": "I",
+    "scene": "I"
+  },
+  {
+    "quote": "O, she doth teach the torches to burn bright!",
+    "play": "Romeo and Juliet",
+    "character": "Romeo",
+    "tags": [
+      "love"
+    ],
+    "act": "I",
+    "scene": "V"
+  },
+  {
+    "quote": "Thus with a kiss I die.",
+    "play": "Romeo and Juliet",
+    "character": "Romeo",
+    "tags": [
+      "love",
+      "death"
+    ],
+    "act": "V",
+    "scene": "III"
+  },
+  {
+    "quote": "See how she leans her cheek upon her hand.",
+    "play": "Romeo and Juliet",
+    "character": "Romeo",
+    "tags": [
+      "love"
+    ],
+    "act": "II",
+    "scene": "II"
+  },
+  {
+    "quote": "True, I talk of dreams, which are the children of an idle brain.",
+    "play": "Romeo and Juliet",
+    "character": "Mercutio",
+    "tags": [
+      "dreams"
+    ],
+    "act": "I",
+    "scene": "IV"
+  },
+  {
+    "quote": "Come, gentle night; come, loving black-brow'd night, give me my Romeo.",
+    "play": "Romeo and Juliet",
+    "character": "Juliet",
+    "tags": [
+      "love"
+    ],
+    "act": "III",
+    "scene": "II"
+  },
+  {
+    "quote": "I am a man more sinned against than sinning.",
+    "play": "King Lear",
+    "character": "King Lear",
+    "tags": [
+      "madness",
+      "grief"
+    ],
+    "act": "III",
+    "scene": "II"
+  },
+  {
+    "quote": "As flies to wanton boys are we to the gods; they kill us for their sport.",
+    "play": "King Lear",
+    "character": "Gloucester",
+    "tags": [
+      "fate"
+    ],
+    "act": "IV",
+    "scene": "I"
+  },
+  {
+    "quote": "Blow, winds, and crack your cheeks! rage! blow!",
+    "play": "King Lear",
+    "character": "King Lear",
+    "tags": [
+      "madness",
+      "nature"
+    ],
+    "act": "III",
+    "scene": "II"
+  },
+  {
+    "quote": "O, let me not be mad, not mad, sweet heaven!",
+    "play": "King Lear",
+    "character": "King Lear",
+    "tags": [
+      "madness"
+    ],
+    "act": "I",
+    "scene": "V"
+  },
+  {
+    "quote": "When we are born, we cry that we are come to this great stage of fools.",
+    "play": "King Lear",
+    "character": "King Lear",
+    "tags": [
+      "folly"
+    ],
+    "act": "IV",
+    "scene": "VI"
+  },
+  {
+    "quote": "The worst is not so long as we can say 'This is the worst.'",
+    "play": "King Lear",
+    "character": "Edgar",
+    "tags": [
+      "grief",
+      "courage"
+    ],
+    "act": "IV",
+    "scene": "I"
+  },
+  {
+    "quote": "Men must endure their going hence, even as their coming hither: ripeness is all.",
+    "play": "King Lear",
+    "character": "Edgar",
+    "tags": [
+      "death",
+      "wisdom"
+    ],
+    "act": "V",
+    "scene": "II"
+  },
+  {
+    "quote": "Have more than thou showest, speak less than thou knowest.",
+    "play": "King Lear",
+    "character": "Fool",
+    "tags": [
+      "wisdom"
+    ],
+    "act": "I",
+    "scene": "IV"
+  },
+  {
+    "quote": "Thou shouldst not have been old till thou hadst been wise.",
+    "play": "King Lear",
+    "character": "Fool",
+    "tags": [
+      "wisdom",
+      "folly"
+    ],
+    "act": "I",
+    "scene": "V"
+  },
+  {
+    "quote": "Love, and be silent.",
+    "play": "King Lear",
+    "character": "Cordelia",
+    "tags": [
+      "love"
+    ],
+    "act": "I",
+    "scene": "I"
+  },
+  {
+    "quote": "Put out the light, and then put out the light.",
+    "play": "Othello",
+    "character": "Othello",
+    "tags": [
+      "death",
+      "love"
+    ],
+    "act": "V",
+    "scene": "II"
+  },
+  {
+    "quote": "I kissed thee ere I killed thee.",
+    "play": "Othello",
+    "character": "Othello",
+    "tags": [
+      "love",
+      "death"
+    ],
+    "act": "V",
+    "scene": "II"
+  },
+  {
+    "quote": "One that loved not wisely but too well.",
+    "play": "Othello",
+    "character": "Othello",
+    "tags": [
+      "love",
+      "jealousy"
+    ],
+    "act": "V",
+    "scene": "II"
+  },
+  {
+    "quote": "I am not what I am.",
+    "play": "Othello",
+    "character": "Iago",
+    "tags": [
+      "deceit"
+    ],
+    "act": "I",
+    "scene": "I"
+  },
+  {
+    "quote": "Who steals my purse steals trash.",
+    "play": "Othello",
+    "character": "Iago",
+    "tags": [
+      "honour"
+    ],
+    "act": "III",
+    "scene": "III"
+  },
+  {
+    "quote": "Trifles light as air are to the jealous confirmations strong as proofs of holy writ.",
+    "play": "Othello",
+    "character": "Iago",
+    "tags": [
+      "jealousy"
+    ],
+    "act": "III",
+    "scene": "III"
+  },
+  {
+    "quote": "She loved me for the dangers I had passed, and I loved her that she did pity them.",
+    "play": "Othello",
+    "character": "Othello",
+    "tags": [
+      "love"
+    ],
+    "act": "I",
+    "scene": "III"
+  },
+  {
+    "quote": "I will wear my heart upon my sleeve for daws to peck at.",
+    "play": "Othello",
+    "character": "Iago",
+    "tags": [
+      "deceit"
+    ],
+    "act": "I",
+    "scene": "I"
+  },
+  {
+    "quote": "Beware the ides of March.",
+    "play": "Julius Caesar",
+    "character": "Soothsayer",
+    "tags": [
+      "fate"
+    ],
+    "act": "I",
+    "scene": "II"
+  },
+  {
+    "quote": "Et tu, Brute? Then fall, Caesar!",
+    "play": "Julius Caesar",
+    "character": "Julius Caesar",
+    "tags": [
+      "deceit",
+      "death"
+    ],
+    "act": "III",
+    "scene": "I"
+  },
+  {
+    "quote": "The evil that men do lives after them; the good is oft interred with their bones.",
+    "play": "Julius Caesar",
+    "character": "Mark Antony",
+    "tags": [
+      "death"
+    ],
+    "act": "III",
+    "scene": "II"
+  },
+  {
+    "quote": "Cry 'Havoc!' and let slip the dogs of war.",
+    "play": "Julius Caesar",
+    "character": "Mark Antony",
+    "tags": [
+      "war"
+    ],
+    "act": "III",
+    "scene": "I"
+  },
+  {
+    "quote": "Yond Cassius has a lean and hungry look; he thinks too much: such men are dangerous.",
+    "play": "Julius Caesar",
+    "character": "Julius Caesar",
+    "tags": [
+      "ambition"
+    ],
+    "act": "I",
+    "scene": "II"
+  },
+  {
+    "quote": "This was the noblest Roman of them all.",
+    "play": "Julius Caesar",
+    "character": "Mark Antony",
+    "tags": [
+      "honour"
+    ],
+    "act": "V",
+    "scene": "V"
+  },
+  {
+    "quote": "Not that I loved Caesar less, but that I loved Rome more.",
+    "play": "Julius Caesar",
+    "character": "Brutus",
+    "tags": [
+      "honour",
+      "power"
+    ],
+    "act": "III",
+    "scene": "II"
+  },
+  {
+    "quote": "It was Greek to me.",
+    "play": "Julius Caesar",
+    "character": "Casca",
+    "tags": [
+      "words"
+    ],
+    "act": "I",
+    "scene": "II"
+  },
+  {
+    "quote": "Men at some time are masters of their fates.",
+    "play": "Julius Caesar",
+    "character": "Cassius",
+    "tags": [
+      "fate",
+      "self"
+    ],
+    "act": "I",
+    "scene": "II"
+  },
+  {
+    "quote": "I am constant as the northern star.",
+    "play": "Julius Caesar",
+    "character": "Julius Caesar",
+    "tags": [
+      "self",
+      "power"
+    ],
+    "act": "III",
+    "scene": "I"
+  },
+  {
+    "quote": "Ambition should be made of sterner stuff.",
+    "play": "Julius Caesar",
+    "character": "Mark Antony",
+    "tags": [
+      "ambition"
+    ],
+    "act": "III",
+    "scene": "II"
+  },
+  {
+    "quote": "Misery acquaints a man with strange bedfellows.",
+    "play": "The Tempest",
+    "character": "Trinculo",
+    "tags": [
+      "fate"
+    ],
+    "act": "II",
+    "scene": "II"
+  },
+  {
+    "quote": "Full fathom five thy father lies.",
+    "play": "The Tempest",
+    "character": "Ariel",
+    "tags": [
+      "death",
+      "music"
+    ],
+    "act": "I",
+    "scene": "II"
+  },
+  {
+    "quote": "Be not afeard; the isle is full of noises, sounds and sweet airs, that give delight and hurt not.",
+    "play": "The Tempest",
+    "character": "Caliban",
+    "tags": [
+      "music",
+      "dreams"
+    ],
+    "act": "III",
+    "scene": "II"
+  },
+  {
+    "quote": "You taught me language, and my profit on't is, I know how to curse.",
+    "play": "The Tempest",
+    "character": "Caliban",
+    "tags": [
+      "words"
+    ],
+    "act": "I",
+    "scene": "II"
+  },
+  {
+    "quote": "Our revels now are ended.",
+    "play": "The Tempest",
+    "character": "Prospero",
+    "tags": [
+      "time"
+    ],
+    "act": "IV",
+    "scene": "I"
+  },
+  {
+    "quote": "The lunatic, the lover and the poet are of imagination all compact.",
+    "play": "A Midsummer Night's Dream",
+    "character": "Theseus",
+    "tags": [
+      "love",
+      "madness"
+    ],
+    "act": "V",
+    "scene": "I"
+  },
+  {
+    "quote": "Though she be but little, she is fierce.",
+    "play": "A Midsummer Night's Dream",
+    "character": "Helena",
+    "tags": [
+      "courage"
+    ],
+    "act": "III",
+    "scene": "II"
+  },
+  {
+    "quote": "I know a bank where the wild thyme blows.",
+    "play": "A Midsummer Night's Dream",
+    "character": "Oberon",
+    "tags": [
+      "nature"
+    ],
+    "act": "II",
+    "scene": "I"
+  },
+  {
+    "quote": "Ill met by moonlight, proud Titania.",
+    "play": "A Midsummer Night's Dream",
+    "character": "Oberon",
+    "tags": [
+      "love"
+    ],
+    "act": "II",
+    "scene": "I"
+  },
+  {
+    "quote": "If we shadows have offended, think but this, and all is mended, that you have but slumber'd here while these visions did appear.",
+    "play": "A Midsummer Night's Dream",
+    "character": "Puck",
+    "tags": [
+      "dreams"
+    ],
+    "act": "V",
+    "scene": "I"
+  },
+  {
+    "quote": "And yet, to say the truth, reason and love keep little company together nowadays.",
+    "play": "A Midsummer Night's Dream",
+    "character": "Bottom",
+    "tags": [
+      "love",
+      "wisdom"
+    ],
+    "act": "III",
+    "scene": "I"
+  },
+  {
+    "quote": "Do you not know I am a woman? When I think, I must speak.",
+    "play": "As You Like It",
+    "character": "Rosalind",
+    "tags": [
+      "words"
+    ],
+    "act": "III",
+    "scene": "II"
+  },
+  {
+    "quote": "Men have died from time to time, and worms have eaten them, but not for love.",
+    "play": "As You Like It",
+    "character": "Rosalind",
+    "tags": [
+      "love",
+      "death"
+    ],
+    "act": "IV",
+    "scene": "I"
+  },
+  {
+    "quote": "Blow, blow, thou winter wind, thou art not so unkind as man's ingratitude.",
+    "play": "As You Like It",
+    "character": "Amiens",
+    "tags": [
+      "nature",
+      "friendship"
+    ],
+    "act": "II",
+    "scene": "VII"
+  },
+  {
+    "quote": "I like this place and willingly could waste my time in it.",
+    "play": "As You Like It",
+    "character": "Celia",
+    "tags": [
+      "nature",
+      "time"
+    ],
+    "act": "II",
+    "scene": "IV"
+  },
+  {
+    "quote": "Love is merely a madness.",
+    "play": "As You Like It",
+    "character": "Rosalind",
+    "tags": [
+      "love",
+      "madness"
+    ],
+    "act": "III",
+    "scene": "II"
+  },
+  {
+    "quote": "And so, from hour to hour, we ripe and ripe, and then, from hour to hour, we rot and rot.",
+    "play": "As You Like It",
+    "character": "Jaques",
+    "tags": [
+      "time"
+    ],
+    "act": "II",
+    "scene": "VII"
+  },
+  {
+    "quote": "Can one desire too much of a good thing?",
+    "play": "As You Like It",
+    "character": "Rosalind",
+    "tags": [
+      "joy"
+    ],
+    "act": "IV",
+    "scene": "I"
+  },
+  {
+    "quote": "Who ever loved that loved not at first sight?",
+    "play": "As You Like It",
+    "character": "Phoebe",
+    "tags": [
+      "love"
+    ],
+    "act": "III",
+    "scene": "V"
+  },
+  {
+    "quote": "Journeys end in lovers meeting.",
+    "play": "Twelfth Night",
+    "character": "Feste",
+    "tags": [
+      "love"
+    ],
+    "act": "II",
+    "scene": "III"
+  },
+  {
+    "quote": "Present mirth hath present laughter; what's to come is still unsure.",
+    "play": "Twelfth Night",
+    "character": "Feste",
+    "tags": [
+      "joy",
+      "time"
+    ],
+    "act": "II",
+    "scene": "III"
+  },
+  {
+    "quote": "Youth's a stuff will not endure.",
+    "play": "Twelfth Night",
+    "character": "Feste",
+    "tags": [
+      "youth"
+    ],
+    "act": "II",
+    "scene": "III"
+  },
+  {
+    "quote": "Love sought is good, but given unsought is better.",
+    "play": "Twelfth Night",
+    "character": "Olivia",
+    "tags": [
+      "love"
+    ],
+    "act": "III",
+    "scene": "I"
+  },
+  {
+    "quote": "I am all the daughters of my father's house, and all the brothers too.",
+    "play": "Twelfth Night",
+    "character": "Viola",
+    "tags": [
+      "self"
+    ],
+    "act": "II",
+    "scene": "IV"
+  },
+  {
+    "quote": "O time, thou must untangle this, not I; it is too hard a knot for me to untie.",
+    "play": "Twelfth Night",
+    "character": "Viola",
+    "tags": [
+      "time"
+    ],
+    "act": "II",
+    "scene": "II"
+  },
+  {
+    "quote": "Thus the whirligig of time brings in his revenges.",
+    "play": "Twelfth Night",
+    "character": "Feste",
+    "tags": [
+      "time",
+      "fate"
+    ],
+    "act": "V",
+    "scene": "I"
+  },
+  {
+    "quote": "Many a good hanging prevents a bad marriage.",
+    "play": "Twelfth Night",
+    "character": "Feste",
+    "tags": [
+      "folly"
+    ],
+    "act": "I",
+    "scene": "V"
+  },
+  {
+    "quote": "If you prick us, do we not bleed? If you tickle us, do we not laugh?",
+    "play": "The Merchant of Venice",
+    "character": "Shylock",
+    "tags": [
+      "self"
+    ],
+    "act": "III",
+    "scene": "I"
+  },
+  {
+    "quote": "The devil can cite Scripture for his purpose.",
+    "play": "The Merchant of Venice",
+    "character": "Antonio",
+    "tags": [
+      "deceit"
+    ],
+    "act": "I",
+    "scene": "III"
+  },
+  {
+    "quote": "I hold the world but as the world, Gratiano, a stage where every man must play a part, and mine a sad one.",
+    "play": "The Merchant of Venice",
+    "character": "Antonio",
+    "tags": [
+      "grief"
+    ],
+    "act": "I",
+    "scene": "I"
+  },
+  {
+    "quote": "Love is blind, and lovers cannot see the pretty follies that themselves commit.",
+    "play": "The Merchant of Venice",
+    "character": "Jessica",
+    "tags": [
+      "love",
+      "folly"
+    ],
+    "act": "II",
+    "scene": "VI"
+  },
+  {
+    "quote": "In sooth, I know not why I am so sad.",
+    "play": "The Merchant of Venice",
+    "character": "Antonio",
+    "tags": [
+      "grief"
+    ],
+    "act": "I",
+    "scene": "I"
+  },
+  {
+    "quote": "Sigh no more, ladies, sigh no more, men were deceivers ever.",
+    "play": "Much Ado About Nothing",
+    "character": "Balthasar",
+    "tags": [
+      "love",
+      "deceit"
+    ],
+    "act": "II",
+    "scene": "III"
+  },
+  {
+    "quote": "I do love nothing in the world so well as you: is not that strange?",
+    "play": "Much Ado About Nothing",
+    "character": "Benedick",
+    "tags": [
+      "love"
+    ],
+    "act": "IV",
+    "scene": "I"
+  },
+  {
+    "quote": "The world must be peopled.",
+    "play": "Much Ado About Nothing",
+    "character": "Benedick",
+    "tags": [
+      "love",
+      "folly"
+    ],
+    "act": "II",
+    "scene": "III"
+  },
+  {
+    "quote": "Everyone can master a grief but he that has it.",
+    "play": "Much Ado About Nothing",
+    "character": "Benedick",
+    "tags": [
+      "grief"
+    ],
+    "act": "III",
+    "scene": "II"
+  },
+  {
+    "quote": "I had rather hear my dog bark at a crow than a man swear he loves me.",
+    "play": "Much Ado About Nothing",
+    "character": "Beatrice",
+    "tags": [
+      "love",
+      "words"
+    ],
+    "act": "I",
+    "scene": "I"
+  },
+  {
+    "quote": "Speak low, if you speak love.",
+    "play": "Much Ado About Nothing",
+    "character": "Don Pedro",
+    "tags": [
+      "love",
+      "words"
+    ],
+    "act": "II",
+    "scene": "I"
+  },
+  {
+    "quote": "Friendship is constant in all other things save in the office and affairs of love.",
+    "play": "Much Ado About Nothing",
+    "character": "Claudio",
+    "tags": [
+      "friendship",
+      "love"
+    ],
+    "act": "II",
+    "scene": "I"
+  },
+  {
+    "quote": "O for a Muse of fire, that would ascend the brightest heaven of invention!",
+    "play": "Henry V",
+    "character": "Chorus",
+    "tags": [
+      "words"
+    ]
+  },
+  {
+    "quote": "Cry 'God for Harry, England, and Saint George!'",
+    "play": "Henry V",
+    "character": "King Henry",
+    "tags": [
+      "war"
+    ],
+    "act": "III",
+    "scene": "I"
+  },
+  {
+    "quote": "In peace there's nothing so becomes a man as modest stillness and humility.",
+    "play": "Henry V",
+    "character": "King Henry",
+    "tags": [
+      "war",
+      "courage"
+    ],
+    "act": "III",
+    "scene": "I"
+  },
+  {
+    "quote": "Men of few words are the best men.",
+    "play": "Henry V",
+    "character": "Boy",
+    "tags": [
+      "words"
+    ],
+    "act": "III",
+    "scene": "II"
+  },
+  {
+    "quote": "Every subject's duty is the King's; but every subject's soul is his own.",
+    "play": "Henry V",
+    "character": "King Henry",
+    "tags": [
+      "self",
+      "power"
+    ],
+    "act": "IV",
+    "scene": "I"
+  },
+  {
+    "quote": "If all the year were playing holidays, to sport would be as tedious as to work.",
+    "play": "Henry IV, Part 1",
+    "character": "Prince Hal",
+    "tags": [
+      "joy"
+    ],
+    "act": "I",
+    "scene": "II"
+  },
+  {
+    "quote": "Banish plump Jack, and banish all the world.",
+    "play": "Henry IV, Part 1",
+    "character": "Falstaff",
+    "tags": [
+      "friendship"
+    ],
+    "act": "II",
+    "scene": "IV"
+  },
+  {
+    "quote": "Tell truth and shame the devil.",
+    "play": "Henry IV, Part 1",
+    "character": "Hotspur",
+    "tags": [
+      "words"
+    ],
+    "act": "III",
+    "scene": "I"
+  },
+  {
+    "quote": "Why, so can I, or so can any man; but will they come when you do call for them?",
+    "play": "Henry IV, Part 1",
+    "character": "Hotspur",
+    "tags": [
+      "words"
+    ],
+    "act": "III",
+    "scene": "I"
+  },
+  {
+    "quote": "We have heard the chimes at midnight, Master Shallow.",
+    "play": "Henry IV, Part 2",
+    "character": "Falstaff",
+    "tags": [
+      "age",
+      "time"
+    ],
+    "act": "III",
+    "scene": "II"
+  },
+  {
+    "quote": "A horse! a horse! my kingdom for a horse!",
+    "play": "Richard III",
+    "character": "Richard",
+    "tags": [
+      "war",
+      "power"
+    ],
+    "act": "V",
+    "scene": "IV"
+  },
+  {
+    "quote": "So wise so young, they say, do never live long.",
+    "play": "Richard III",
+    "character": "Richard",
+    "tags": [
+      "wisdom",
+      "youth"
+    ],
+    "act": "III",
+    "scene": "I"
+  },
+  {
+    "quote": "Conscience is but a word that cowards use.",
+    "play": "Richard III",
+    "character": "Richard",
+    "tags": [
+      "guilt",
+      "courage"
+    ],
+    "act": "V",
+    "scene": "III"
+  },
+  {
+    "quote": "For God's sake, let us sit upon the ground and tell sad stories of the death of kings.",
+    "play": "Richard II",
+    "character": "King Richard",
+    "tags": [
+      "death",
+      "power",
+      "grief"
+    ],
+    "act": "III",
+    "scene": "II"
+  },
+  {
+    "quote": "This blessed plot, this earth, this realm, this England.",
+    "play": "Richard II",
+    "character": "John of Gaunt",
+    "tags": [
+      "nature",
+      "power"
+    ],
+    "act": "II",
+    "scene": "I"
+  },
+  {
+    "quote": "I wasted time, and now doth time waste me.",
+    "play": "Richard II",
+    "character": "King Richard",
+    "tags": [
+      "time"
+    ],
+    "act": "V",
+    "scene": "V"
+  },
+  {
+    "quote": "Age cannot wither her, nor custom stale her infinite variety.",
+    "play": "Antony and Cleopatra",
+    "character": "Enobarbus",
+    "tags": [
+      "love",
+      "age"
+    ],
+    "act": "II",
+    "scene": "II"
+  },
+  {
+    "quote": "My salad days, when I was green in judgment.",
+    "play": "Antony and Cleopatra",
+    "character": "Cleopatra",
+    "tags": [
+      "youth"
+    ],
+    "act": "I",
+    "scene": "V"
+  },
+  {
+    "quote": "The barge she sat in, like a burnish'd throne, burn'd on the water.",
+    "play": "Antony and Cleopatra",
+    "character": "Enobarbus",
+    "tags": [
+      "love"
+    ],
+    "act": "II",
+    "scene": "II"
+  },
+  {
+    "quote": "There's beggary in the love that can be reckon'd.",
+    "play": "Antony and Cleopatra",
+    "character": "Antony",
+    "tags": [
+      "love"
+    ],
+    "act": "I",
+    "scene": "I"
+  },
+  {
+    "quote": "I am dying, Egypt, dying.",
+    "play": "Antony and Cleopatra",
+    "character": "Antony",
+    "tags": [
+      "death",
+      "love"
+    ],
+    "act": "IV",
+    "scene": "XV"
+  },
+  {
+    "quote": "A sad tale's best for winter.",
+    "play": "The Winter's Tale",
+    "character": "Mamillius",
+    "tags": [
+      "grief"
+    ],
+    "act": "II",
+    "scene": "I"
+  },
+  {
+    "quote": "Some rise by sin, and some by virtue fall.",
+    "play": "Measure for Measure",
+    "character": "Escalus",
+    "tags": [
+      "fate",
+      "guilt"
+    ],
+    "act": "II",
+    "scene": "I"
+  },
+  {
+    "quote": "O, it is excellent to have a giant's strength, but it is tyrannous to use it like a giant.",
+    "play": "Measure for Measure",
+    "character": "Isabella",
+    "tags": [
+      "power",
+      "mercy"
+    ],
+    "act": "II",
+    "scene": "II"
+  },
+  {
+    "quote": "The miserable have no other medicine but only hope.",
+    "play": "Measure for Measure",
+    "character": "Claudio",
+    "tags": [
+      "grief",
+      "courage"
+    ],
+    "act": "III",
+    "scene": "I"
+  },
+  {
+    "quote": "Our remedies oft in ourselves do lie, which we ascribe to heaven.",
+    "play": "All's Well That Ends Well",
+    "character": "Helena",
+    "tags": [
+      "self",
+      "fate"
+    ],
+    "act": "I",
+    "scene": "I"
+  },
+  {
+    "quote": "The web of our life is of a mingled yarn, good and ill together.",
+    "play": "All's Well That Ends Well",
+    "character": "First Lord",
+    "tags": [
+      "fate"
+    ],
+    "act": "IV",
+    "scene": "III"
+  },
+  {
+    "quote": "Kiss me, Kate.",
+    "play": "The Taming of the Shrew",
+    "character": "Petruchio",
+    "tags": [
+      "love"
+    ],
+    "act": "II",
+    "scene": "I"
+  },
+  {
+    "quote": "If I be waspish, best beware my sting.",
+    "play": "The Taming of the Shrew",
+    "character": "Katherina",
+    "tags": [
+      "love",
+      "words"
+    ],
+    "act": "II",
+    "scene": "I"
+  },
+  {
+    "quote": "There's small choice in rotten apples.",
+    "play": "The Taming of the Shrew",
+    "character": "Hortensio",
+    "tags": [
+      "wisdom"
+    ],
+    "act": "I",
+    "scene": "I"
+  },
+  {
+    "quote": "Why, then the world's mine oyster, which I with sword will open.",
+    "play": "The Merry Wives of Windsor",
+    "character": "Pistol",
+    "tags": [
+      "ambition",
+      "fate"
+    ],
+    "act": "II",
+    "scene": "II"
+  },
+  {
+    "quote": "The first thing we do, let's kill all the lawyers.",
+    "play": "Henry VI, Part 2",
+    "character": "Dick the Butcher",
+    "tags": [
+      "power",
+      "folly"
+    ],
+    "act": "IV",
+    "scene": "II"
+  },
+  {
+    "quote": "I can add colours to the chameleon.",
+    "play": "Henry VI, Part 3",
+    "character": "Richard",
+    "tags": [
+      "deceit"
+    ],
+    "act": "III",
+    "scene": "II"
+  },
+  {
+    "quote": "Heat not a furnace for your foe so hot that it do singe yourself.",
+    "play": "Henry VIII",
+    "character": "Norfolk",
+    "tags": [
+      "wisdom"
+    ],
+    "act": "I",
+    "scene": "I"
+  },
+  {
+    "quote": "To gild refined gold, to paint the lily, to throw a perfume on the violet.",
+    "play": "King John",
+    "character": "Salisbury",
+    "tags": [
+      "folly"
+    ],
+    "act": "IV",
+    "scene": "II"
+  },
+  {
+    "quote": "Grief fills the room up of my absent child.",
+    "play": "King John",
+    "character": "Constance",
+    "tags": [
+      "grief"
+    ],
+    "act": "III",
+    "scene": "IV"
+  },
+  {
+    "quote": "They do not love that do not show their love.",
+    "play": "The Two Gentlemen of Verona",
+    "character": "Julia",
+    "tags": [
+      "love"
+    ],
+    "act": "I",
+    "scene": "II"
+  },
+  {
+    "quote": "They have been at a great feast of languages, and stolen the scraps.",
+    "play": "Love's Labour's Lost",
+    "character": "Moth",
+    "tags": [
+      "words"
+    ],
+    "act": "V",
+    "scene": "I"
+  },
+  {
+    "quote": "Every why hath a wherefore.",
+    "play": "The Comedy of Errors",
+    "character": "Dromio of Syracuse",
+    "tags": [
+      "words",
+      "wisdom"
+    ],
+    "act": "II",
+    "scene": "II"
+  },
+  {
+    "quote": "One touch of nature makes the whole world kin.",
+    "play": "Troilus and Cressida",
+    "character": "Ulysses",
+    "tags": [
+      "nature"
+    ],
+    "act": "III",
+    "scene": "III"
+  },
+  {
+    "quote": "We have seen better days.",
+    "play": "Timon of Athens",
+    "character": "Flavius",
+    "tags": [
+      "grief",
+      "fate"
+    ],
+    "act": "IV",
+    "scene": "II"
+  },
+  {
+    "quote": "Fear no more the heat o' the sun.",
+    "play": "Cymbeline",
+    "character": "Guiderius",
+    "tags": [
+      "death"
+    ],
+    "act": "IV",
+    "scene": "II"
+  },
+  {
+    "quote": "Golden lads and girls all must, as chimney-sweepers, come to dust.",
+    "play": "Cymbeline",
+    "character": "Guiderius",
+    "tags": [
+      "death",
+      "youth"
+    ],
+    "act": "IV",
+    "scene": "II"
+  },
+  {
+    "quote": "What is the city but the people?",
+    "play": "Coriolanus",
+    "character": "Sicinius",
+    "tags": [
+      "power"
+    ],
+    "act": "III",
+    "scene": "I"
+  },
+  {
+    "quote": "Vengeance is in my heart, death in my hand.",
+    "play": "Titus Andronicus",
+    "character": "Aaron",
+    "tags": [
+      "death"
+    ],
+    "act": "II",
+    "scene": "III"
+  },
+  {
+    "quote": "Few love to hear the sins they love to act.",
+    "play": "Pericles",
+    "character": "Pericles",
+    "tags": [
+      "guilt"
+    ],
+    "act": "I",
     "scene": "I"
   }
 ]

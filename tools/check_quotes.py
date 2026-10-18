@@ -71,6 +71,8 @@ TITLE_TO_PLAY = {title: play for play, title in PLAY_TITLES.items()}
 
 CLOSE_ENOUGH = 0.85  # word-level similarity below this counts as "not found"
 SPEAKER_LINE = re.compile(r"^[A-Z][A-Z0-9 ,’'&-]*\.$")
+# Speaker line followed by a stage direction: "CLOWN. [_sings._]", "BALTHASAR [sings.]"
+SPEAKER_WITH_DIRECTION = re.compile(r"^([A-Z][A-Z0-9 ,’'&-]*?)\.?\s*(\[[^\]]*\]|\([^)]*\))$")
 ACT_LINE = re.compile(r"^ACT ([IVX]+)\b")
 SCENE_LINE = re.compile(r"^SCENE ([IVX]+)\.")
 STAGE_DIRECTION = re.compile(r"\[_.*?_\]")
@@ -82,6 +84,8 @@ SPEAKER_ALIASES = {
     ("Twelfth Night", "DUKE"): "Orsino",
     ("Twelfth Night", "CLOWN"): "Feste",
     ("Macbeth", "ALL"): "The Witches",
+    ("Hamlet", "KING"): "Claudius",
+    ("Hamlet", "QUEEN"): "Gertrude",
     ("Romeo and Juliet", "FRIAR LAWRENCE"): "Friar Laurence",
 }
 # Elided forms, so "under ’t" matches "under it"
@@ -139,18 +143,24 @@ def index_works(text):
         if SPEAKER_LINE.match(line):
             speaker = line.rstrip(".")
             continue
+        if SPEAKER_WITH_DIRECTION.match(line):
+            speaker = SPEAKER_WITH_DIRECTION.match(line).group(1)
+            continue
         for word in normalize_words(STAGE_DIRECTION.sub(" ", line)):
             words.append(word)
             where.append((play, act, scene, speaker, line))
     return words, where
 
 
-def best_match(quote_words, words, positions):
-    """(similarity, start index) of the passage most similar to the quote."""
+def best_match(quote_words, words, positions, where=None, play=None):
+    """(similarity, start index) of the passage most similar to the quote.
+
+    Equally good matches (a line used in two plays) prefer the given play.
+    """
     n = len(quote_words)
     # Anchor on the quote's rarest words, then compare a window around each occurrence
     anchors = sorted(set(quote_words), key=lambda w: len(positions.get(w, ())) or 10**9)[:3]
-    best = (0.0, None)
+    best, best_key = (0.0, None), (0.0, False)
     for anchor in anchors:
         offset = quote_words.index(anchor)
         for pos in positions.get(anchor, ()):
@@ -158,9 +168,12 @@ def best_match(quote_words, words, positions):
             window = words[start:start + n + 4]
             matcher = difflib.SequenceMatcher(None, quote_words, window, autojunk=False)
             ratio = matcher.ratio() * (len(window) + n) / (2 * n)  # score against the quote length
-            if ratio > best[0]:
-                blocks = [b for b in matcher.get_matching_blocks() if b.size]
-                best = (min(ratio, 1.0), start + (blocks[0].b - blocks[0].a if blocks else 0))
+            blocks = [b for b in matcher.get_matching_blocks() if b.size]
+            match_start = start + (blocks[0].b - blocks[0].a if blocks else 0)
+            in_play = where is not None and where[min(match_start, len(where) - 1)][0] == play
+            key = (round(min(ratio, 1.0), 6), in_play)
+            if key > best_key:
+                best, best_key = (key[0], match_start), key
     return best
 
 
@@ -186,7 +199,7 @@ def check(quotes, words, where, write_refs=False):
     problems = 0
     for q in quotes:
         quote_words = normalize_words(q["quote"])
-        ratio, start = best_match(quote_words, words, positions)
+        ratio, start = best_match(quote_words, words, positions, where, q["play"])
         found = start is not None and ratio >= CLOSE_ENOUGH
         issues = []
         if q["play"] not in PLAY_TITLES:
