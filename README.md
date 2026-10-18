@@ -52,10 +52,25 @@ launchctl kickstart -k gui/$(id -u)/com.shakespeare.wallpaper       # trigger th
 - Images: `~/Pictures/ShakespeareDaily/` (a new filename each run, since macOS caches wallpapers by path).
 - Logs: `logs/out.log`, `logs/err.log`.
 
+## Themes
+
+| Theme | |
+|---|---|
+| `ink` (default) | charcoal to black, cream text, gold accent |
+| `parchment` | warm cream, dark-brown text, oxblood accent |
+| `midnight` | deep navy, silver text |
+| `auto` | `ink` in dark mode, `parchment` in light mode |
+
+Pick one in the menu bar app (**Theme** submenu) or with
+`.venv/bin/python shakespeare_wallpaper.py --theme parchment` (saved for future runs; add
+`--dry-run --output /tmp/x` to preview without saving). With `auto`, the menu bar app redraws
+the wallpaper when macOS switches between light and dark. The lock-screen clock is white, so it
+stands out less on `parchment`.
+
 ## Menu bar app
 
 `menubar.py` adds a ❦ icon to the menu bar: shows the current quote, **New Quote Now**,
-**Add Quote…**, **Remove Current Quote…**, **Edit quotes.json…**, **Open Wallpaper Folder**.
+**Add Quote…**, **Remove Current Quote…**, **Theme**, **Edit quotes.json…**, **Open Wallpaper Folder**.
 It also redraws the wallpaper when a display is connected or removed. The daily change above
 keeps working whether or not the app is running.
 

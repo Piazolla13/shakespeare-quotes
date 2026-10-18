@@ -25,13 +25,14 @@ from AppKit import (
     NSTextField,
     NSView,
 )
-from Foundation import NSNotificationCenter, NSObject
+from Foundation import NSDistributedNotificationCenter, NSNotificationCenter, NSObject
 
 import shakespeare_wallpaper as sw
 
 MENU_TITLE = "❦"
 MAX_ITEM_CHARS = 60
 SCREEN_CHANGE_DELAY = 2.0  # seconds; displays report several changes while settling
+THEME_TITLES = {"auto": "Automatic (Light / Dark)", "ink": "Ink", "parchment": "Parchment", "midnight": "Midnight"}
 
 log = logging.getLogger("shakespeare.menubar")
 
@@ -111,16 +112,16 @@ def quote_dialog(values):
     return quote, show_now.state() == NSControlStateValueOn
 
 
-class ScreenObserver(NSObject):
-    """Debounces display-change notifications and calls back once things settle."""
+class DebouncedObserver(NSObject):
+    """Debounces notifications (displays and appearance report several changes while settling)."""
 
     def initWithCallback_(self, callback):
-        self = objc.super(ScreenObserver, self).init()
+        self = objc.super(DebouncedObserver, self).init()
         if self is not None:
             self.callback = callback
         return self
 
-    def screensChanged_(self, notification):
+    def changed_(self, notification):
         NSObject.cancelPreviousPerformRequestsWithTarget_(self)
         self.performSelector_withObject_afterDelay_("fire:", None, SCREEN_CHANGE_DELAY)
 
@@ -133,6 +134,11 @@ class ShakespeareApp(rumps.App):
         super().__init__("Shakespeare Wallpaper", title=MENU_TITLE, quit_button="Quit")
         self.quote_item = rumps.MenuItem("No quote yet")
         self.attribution_item = rumps.MenuItem("")
+        self.theme_items = {name: rumps.MenuItem(title, callback=self.choose_theme)
+                            for name, title in THEME_TITLES.items()}
+        theme_menu = rumps.MenuItem("Theme")
+        for item in self.theme_items.values():
+            theme_menu.add(item)
         self.menu = [
             self.quote_item,
             self.attribution_item,
@@ -140,6 +146,7 @@ class ShakespeareApp(rumps.App):
             rumps.MenuItem("New Quote Now", callback=self.new_quote),
             rumps.MenuItem("Add Quote…", callback=self.add_quote),
             rumps.MenuItem("Remove Current Quote…", callback=self.remove_quote),
+            theme_menu,
             None,
             rumps.MenuItem("Edit quotes.json…", callback=self.edit_quotes),
             rumps.MenuItem("Open Wallpaper Folder", callback=self.open_folder),
@@ -147,10 +154,14 @@ class ShakespeareApp(rumps.App):
         ]
         self.state_mtime = None
 
-        self.screen_observer = ScreenObserver.alloc().initWithCallback_(self.screens_changed)
+        self.screen_observer = DebouncedObserver.alloc().initWithCallback_(self.screens_changed)
         NSNotificationCenter.defaultCenter().addObserver_selector_name_object_(
-            self.screen_observer, "screensChanged:",
-            NSApplicationDidChangeScreenParametersNotification, None,
+            self.screen_observer, "changed:", NSApplicationDidChangeScreenParametersNotification, None,
+        )
+        # Posted when macOS switches between light and dark
+        self.appearance_observer = DebouncedObserver.alloc().initWithCallback_(self.appearance_changed)
+        NSDistributedNotificationCenter.defaultCenter().addObserver_selector_name_object_(
+            self.appearance_observer, "changed:", "AppleInterfaceThemeChangedNotification", None,
         )
         # Picks up quote changes made by the daily LaunchAgent; fires once immediately.
         # Keep a reference: rumps only holds timers weakly.
@@ -165,6 +176,9 @@ class ShakespeareApp(rumps.App):
         if mtime == self.state_mtime:
             return
         self.state_mtime = mtime
+        theme = sw.get_theme()
+        for name, item in self.theme_items.items():
+            item.state = int(name == theme)
         quote = sw.current_quote()
         if quote:
             self.quote_item.title = truncate(f"“{quote['quote']}”")
@@ -223,17 +237,35 @@ class ShakespeareApp(rumps.App):
         sw.OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
         subprocess.run(["open", str(sw.OUTPUT_DIR)])
 
+    @guarded
+    def choose_theme(self, sender):
+        name = next(n for n, item in self.theme_items.items() if item is sender)
+        sw.set_theme(name)
+        log.info("Theme set to %s", name)
+        self.redraw()
+
+    def redraw(self):
+        quote = sw.current_quote()
+        if quote:
+            sw.apply_quote(quote)
+        else:
+            sw.next_quote()
+        self.refresh()
+
     def screens_changed(self):
         try:
-            quote = sw.current_quote()
             log.info("Displays changed, redrawing wallpaper")
-            if quote:
-                sw.apply_quote(quote)
-            else:
-                sw.next_quote()
-            self.refresh()
+            self.redraw()
         except Exception:
             log.exception("Redraw after display change failed")
+
+    def appearance_changed(self):
+        try:
+            if sw.get_theme() == "auto":
+                log.info("Appearance changed, redrawing wallpaper")
+                self.redraw()
+        except Exception:
+            log.exception("Redraw after appearance change failed")
 
 
 def main():

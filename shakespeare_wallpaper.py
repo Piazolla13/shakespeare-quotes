@@ -44,10 +44,16 @@ ATTRIBUTION_FONTS = [
     ("/System/Library/Fonts/Supplemental/Georgia.ttf", 0),
 ]
 
-BG_TOP = (28, 30, 38)
-BG_BOTTOM = (8, 9, 12)
-TEXT_COLOR = (238, 228, 206)
-ACCENT_COLOR = (176, 150, 102)
+# Background gradient (top, bottom), quote text, accent (rule and attribution)
+THEMES = {
+    "ink": {"top": (28, 30, 38), "bottom": (8, 9, 12), "text": (238, 228, 206), "accent": (176, 150, 102)},
+    "parchment": {"top": (243, 234, 213), "bottom": (225, 210, 178), "text": (52, 38, 28),
+                  "accent": (122, 42, 34)},
+    "midnight": {"top": (24, 36, 62), "bottom": (6, 10, 24), "text": (226, 232, 242), "accent": (148, 168, 200)},
+}
+AUTO_THEMES = {"dark": "ink", "light": "parchment"}  # "auto" follows the macOS appearance
+THEME_CHOICES = ["auto", *THEMES]
+DEFAULT_THEME = "ink"
 
 # Quote block is kept in the middle band, clear of the lock-screen clock (top)
 # and the avatar / password field (bottom).
@@ -161,11 +167,11 @@ def wrap(draw, text, font, max_width):
     return lines
 
 
-def gradient_background(width, height):
+def gradient_background(width, height, palette):
     column = Image.new("RGB", (1, height))
     for y in range(height):
         t = y / max(height - 1, 1)
-        column.putpixel((0, y), tuple(round(a + (b - a) * t) for a, b in zip(BG_TOP, BG_BOTTOM)))
+        column.putpixel((0, y), tuple(round(a + (b - a) * t) for a, b in zip(palette["top"], palette["bottom"])))
     return column.resize((width, height))
 
 
@@ -197,8 +203,9 @@ def attribution_text(quote):
     return text.upper()
 
 
-def render(quote, width, height):
-    image = gradient_background(width, height)
+def render(quote, width, height, theme=DEFAULT_THEME):
+    palette = THEMES[theme]
+    image = gradient_background(width, height, palette)
     draw = ImageDraw.Draw(image)
 
     text = f"“{quote['quote'].strip().replace(chr(39), '’')}”"
@@ -213,13 +220,13 @@ def render(quote, width, height):
     y = height * BLOCK_CENTER_Y - block_height / 2
 
     for line in lines:
-        draw.text((width / 2, y + line_height / 2), line, font=font, fill=TEXT_COLOR, anchor="mm")
+        draw.text((width / 2, y + line_height / 2), line, font=font, fill=palette["text"], anchor="mm")
         y += line_height
 
     y += gap
     rule_half = width * 0.03
     draw.line([(width / 2 - rule_half, y), (width / 2 + rule_half, y)],
-              fill=ACCENT_COLOR, width=max(1, round(height / 900)))
+              fill=palette["accent"], width=max(1, round(height / 900)))
     y += rule_gap + attr_height
 
     # Letter-spaced small-caps style attribution, drawn on a shared baseline
@@ -227,7 +234,7 @@ def render(quote, width, height):
     char_widths = [draw.textlength(c, font=attr_font) for c in attribution]
     x = width / 2 - (sum(char_widths) + spacing * (len(attribution) - 1)) / 2
     for c, w in zip(attribution, char_widths):
-        draw.text((x, y), c, font=attr_font, fill=ACCENT_COLOR, anchor="ls")
+        draw.text((x, y), c, font=attr_font, fill=palette["accent"], anchor="ls")
         x += w + spacing
 
     return image
@@ -261,16 +268,42 @@ def cleanup(output_dir, keep):
             old.unlink()
 
 
-def apply_quote(quote, output_dir=None, dry_run=False):
+def dark_mode():
+    from Foundation import NSUserDefaults
+
+    return NSUserDefaults.standardUserDefaults().stringForKey_("AppleInterfaceStyle") == "Dark"
+
+
+def resolve_theme(name):
+    """Palette name to draw with; "auto" picks by the current macOS appearance."""
+    if name == "auto":
+        return AUTO_THEMES["dark" if dark_mode() else "light"]
+    return name if name in THEMES else DEFAULT_THEME
+
+
+def get_theme():
+    return load_state(STATE_PATH).get("theme", DEFAULT_THEME)
+
+
+def set_theme(name):
+    if name not in THEME_CHOICES:
+        raise ValueError(f"Unknown theme {name!r}; choose from {', '.join(THEME_CHOICES)}")
+    state = load_state(STATE_PATH)
+    state["theme"] = name
+    save_state(STATE_PATH, state)
+
+
+def apply_quote(quote, output_dir=None, dry_run=False, theme=None):
     """Render the quote for every connected screen and set it as the wallpaper."""
     output_dir = Path(output_dir or OUTPUT_DIR)
+    theme = resolve_theme(theme or get_theme())
     output_dir.mkdir(parents=True, exist_ok=True)
     # Microseconds keep filenames unique across quick re-renders (macOS caches by path)
     stamp = datetime.now().strftime("%Y%m%d-%H%M%S-%f")
     written = []
     for i, (screen, width, height) in enumerate(get_screens()):
         path = output_dir / f"{FILE_PREFIX}{stamp}_{i}_{width}x{height}.png"
-        render(quote, width, height).save(path)
+        render(quote, width, height, theme).save(path)
         written.append(path)
         log.info("Rendered %s", path)
         if not dry_run:
@@ -280,10 +313,10 @@ def apply_quote(quote, output_dir=None, dry_run=False):
     return written
 
 
-def show_quote(quote, output_dir=None, dry_run=False, state=None):
+def show_quote(quote, output_dir=None, dry_run=False, state=None, theme=None):
     """Set the quote as wallpaper and record it as current (and recently shown)."""
     log.info("Quote: %s (%s, %s)", quote["quote"], quote["character"], quote["play"])
-    apply_quote(quote, output_dir, dry_run)
+    apply_quote(quote, output_dir, dry_run, theme)
     if not dry_run:
         if state is None:
             state = load_state(STATE_PATH)
@@ -295,11 +328,11 @@ def show_quote(quote, output_dir=None, dry_run=False, state=None):
     return quote
 
 
-def next_quote(output_dir=None, dry_run=False):
+def next_quote(output_dir=None, dry_run=False, theme=None):
     """Pick a fresh quote and show it."""
     state = load_state(STATE_PATH)
     quote = pick_quote(load_quotes(QUOTES_PATH), state)
-    return show_quote(quote, output_dir, dry_run, state)
+    return show_quote(quote, output_dir, dry_run, state, theme)
 
 
 def current_quote():
@@ -311,12 +344,16 @@ def main():
     parser.add_argument("--dry-run", action="store_true",
                         help="render images only; don't set wallpaper or update state")
     parser.add_argument("--output", type=Path, default=OUTPUT_DIR, help="directory for images")
+    parser.add_argument("--theme", choices=THEME_CHOICES,
+                        help="use this theme from now on (with --dry-run: for this render only)")
     args = parser.parse_args()
 
     logging.basicConfig(level=logging.INFO, stream=sys.stdout,
                         format="%(asctime)s %(levelname)s %(message)s")
 
-    next_quote(args.output, args.dry_run)
+    if args.theme and not args.dry_run:
+        set_theme(args.theme)
+    next_quote(args.output, args.dry_run, args.theme)
 
 
 if __name__ == "__main__":

@@ -19,22 +19,43 @@ SAFE_TOP, SAFE_BOTTOM = 0.25, 0.85
 SAFE_SIDE = 0.10
 
 
-def text_bbox(quote, width, height):
+def text_bbox(quote, width, height, theme=sw.DEFAULT_THEME):
     """Bounding box of everything drawn on top of the plain background."""
-    image = sw.render(quote, width, height)
-    return ImageChops.difference(image, sw.gradient_background(width, height)).getbbox()
+    image = sw.render(quote, width, height, theme)
+    background = sw.gradient_background(width, height, sw.THEMES[theme])
+    return ImageChops.difference(image, background).getbbox()
 
 
-def assert_in_safe_zone(quote, width, height):
-    left, top, right, bottom = text_bbox(quote, width, height)
+def assert_in_safe_zone(quote, width, height, theme=sw.DEFAULT_THEME):
+    left, top, right, bottom = text_bbox(quote, width, height, theme)
     assert top >= SAFE_TOP * height, f"text starts at {top / height:.0%} of height"
     assert bottom <= SAFE_BOTTOM * height, f"text ends at {bottom / height:.0%} of height"
     assert left >= SAFE_SIDE * width and right <= (1 - SAFE_SIDE) * width
 
 
+@pytest.mark.parametrize("theme", sw.THEMES)
 @pytest.mark.parametrize("size", [(1920, 1080), (2880, 1800)])
-def test_render_size(size):
-    assert sw.render(SHORT, *size).size == size
+def test_render_size_and_safe_zone_for_every_theme(size, theme):
+    assert sw.render(SHORT, *size, theme).size == size
+    assert_in_safe_zone(LONG, *size, theme)
+
+
+def contrast(a, b):
+    """WCAG contrast ratio between two RGB colours."""
+    def luminance(rgb):
+        c = [v / 255 for v in rgb]
+        c = [v / 12.92 if v <= 0.03928 else ((v + 0.055) / 1.055) ** 2.4 for v in c]
+        return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]
+    hi, lo = sorted([luminance(a), luminance(b)], reverse=True)
+    return (hi + 0.05) / (lo + 0.05)
+
+
+@pytest.mark.parametrize("theme", sw.THEMES)
+def test_theme_text_is_readable(theme):
+    palette = sw.THEMES[theme]
+    for background in (palette["top"], palette["bottom"]):
+        assert contrast(palette["text"], background) >= 7     # WCAG AAA
+        assert contrast(palette["accent"], background) >= 4.5  # WCAG AA
 
 
 @pytest.mark.parametrize("quote", [SHORT, LONG], ids=["short", "long"])

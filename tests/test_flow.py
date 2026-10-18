@@ -53,3 +53,49 @@ def test_menubar_truncate():
     long_text = "word " * 30
     result = menubar.truncate(long_text)
     assert len(result) <= menubar.MAX_ITEM_CHARS and result.endswith("…")
+
+
+# Themes
+
+def test_auto_theme_follows_appearance(monkeypatch):
+    monkeypatch.setattr(sw, "dark_mode", lambda: True)
+    assert sw.resolve_theme("auto") == "ink"
+    monkeypatch.setattr(sw, "dark_mode", lambda: False)
+    assert sw.resolve_theme("auto") == "parchment"
+    assert sw.resolve_theme("midnight") == "midnight"
+    assert sw.resolve_theme("removed-theme") == sw.DEFAULT_THEME
+
+
+def test_set_theme_saves_choice_and_rejects_unknown(project):
+    assert sw.get_theme() == sw.DEFAULT_THEME
+    sw.set_theme("parchment")
+    assert sw.get_theme() == "parchment"
+    try:
+        sw.set_theme("neon")
+        raise AssertionError("should fail")
+    except ValueError as e:
+        assert "Unknown theme" in str(e)
+    assert sw.get_theme() == "parchment"
+
+
+def test_apply_quote_uses_saved_theme_unless_overridden(project, fake_screens, monkeypatch):
+    used = []
+    real_render = sw.render
+    monkeypatch.setattr(sw, "render", lambda q, w, h, theme: used.append(theme) or real_render(q, w, h, theme))
+    sw.set_theme("midnight")
+    sw.apply_quote(QUOTE)
+    sw.apply_quote(QUOTE, theme="parchment")
+    assert used == ["midnight", "midnight", "parchment", "parchment"]
+
+
+def test_menubar_theme_menu_saves_and_redraws(project, fake_screens):
+    sw.show_quote(QUOTE)
+    fake_screens.clear()
+    app = menubar.ShakespeareApp()
+
+    app.choose_theme(app.theme_items["parchment"])
+
+    assert sw.get_theme() == "parchment"
+    assert len(fake_screens) == 2  # current quote redrawn on both screens
+    assert [n for n, item in app.theme_items.items() if item.state] == ["parchment"]
+    assert sw.current_quote() == QUOTE
