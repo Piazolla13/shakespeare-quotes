@@ -2233,5 +2233,258 @@
     ],
     "act": "I",
     "scene": "I"
+  },
+  {
+    "quote": "From fairest creatures we desire increase, that thereby beauty's rose might never die.",
+    "play": "Sonnets",
+    "character": "Shakespeare",
+    "sonnet": 1,
+    "tags": [
+      "love",
+      "youth"
+    ]
+  },
+  {
+    "quote": "When forty winters shall besiege thy brow, and dig deep trenches in thy beauty's field.",
+    "play": "Sonnets",
+    "character": "Shakespeare",
+    "sonnet": 2,
+    "tags": [
+      "age",
+      "time"
+    ]
+  },
+  {
+    "quote": "Shall I compare thee to a summer's day? Thou art more lovely and more temperate.",
+    "play": "Sonnets",
+    "character": "Shakespeare",
+    "sonnet": 18,
+    "tags": [
+      "love",
+      "nature"
+    ]
+  },
+  {
+    "quote": "But thy eternal summer shall not fade.",
+    "play": "Sonnets",
+    "character": "Shakespeare",
+    "sonnet": 18,
+    "tags": [
+      "love",
+      "time"
+    ]
+  },
+  {
+    "quote": "So long as men can breathe or eyes can see, so long lives this, and this gives life to thee.",
+    "play": "Sonnets",
+    "character": "Shakespeare",
+    "sonnet": 18,
+    "tags": [
+      "love",
+      "words",
+      "time"
+    ]
+  },
+  {
+    "quote": "Devouring Time, blunt thou the lion's paws.",
+    "play": "Sonnets",
+    "character": "Shakespeare",
+    "sonnet": 19,
+    "tags": [
+      "time"
+    ]
+  },
+  {
+    "quote": "When, in disgrace with fortune and men's eyes, I all alone beweep my outcast state.",
+    "play": "Sonnets",
+    "character": "Shakespeare",
+    "sonnet": 29,
+    "tags": [
+      "grief",
+      "fate"
+    ]
+  },
+  {
+    "quote": "For thy sweet love remember'd such wealth brings that then I scorn to change my state with kings.",
+    "play": "Sonnets",
+    "character": "Shakespeare",
+    "sonnet": 29,
+    "tags": [
+      "love",
+      "joy"
+    ]
+  },
+  {
+    "quote": "When to the sessions of sweet silent thought I summon up remembrance of things past.",
+    "play": "Sonnets",
+    "character": "Shakespeare",
+    "sonnet": 30,
+    "tags": [
+      "time",
+      "grief"
+    ]
+  },
+  {
+    "quote": "Not marble, nor the gilded monuments of princes, shall outlive this powerful rhyme.",
+    "play": "Sonnets",
+    "character": "Shakespeare",
+    "sonnet": 55,
+    "tags": [
+      "time",
+      "words"
+    ]
+  },
+  {
+    "quote": "Like as the waves make towards the pebbled shore, so do our minutes hasten to their end.",
+    "play": "Sonnets",
+    "character": "Shakespeare",
+    "sonnet": 60,
+    "tags": [
+      "time"
+    ]
+  },
+  {
+    "quote": "O, how shall summer's honey breath hold out against the wrackful siege of batt'ring days?",
+    "play": "Sonnets",
+    "character": "Shakespeare",
+    "sonnet": 65,
+    "tags": [
+      "time"
+    ]
+  },
+  {
+    "quote": "No longer mourn for me when I am dead.",
+    "play": "Sonnets",
+    "character": "Shakespeare",
+    "sonnet": 71,
+    "tags": [
+      "death",
+      "grief"
+    ]
+  },
+  {
+    "quote": "That time of year thou mayst in me behold when yellow leaves, or none, or few, do hang upon those boughs which shake against the cold.",
+    "play": "Sonnets",
+    "character": "Shakespeare",
+    "sonnet": 73,
+    "tags": [
+      "age",
+      "time"
+    ]
+  },
+  {
+    "quote": "This thou perceiv'st, which makes thy love more strong, to love that well which thou must leave ere long.",
+    "play": "Sonnets",
+    "character": "Shakespeare",
+    "sonnet": 73,
+    "tags": [
+      "love",
+      "age"
+    ]
+  },
+  {
+    "quote": "Farewell! thou art too dear for my possessing.",
+    "play": "Sonnets",
+    "character": "Shakespeare",
+    "sonnet": 87,
+    "tags": [
+      "love",
+      "grief"
+    ]
+  },
+  {
+    "quote": "Lilies that fester smell far worse than weeds.",
+    "play": "Sonnets",
+    "character": "Shakespeare",
+    "sonnet": 94,
+    "tags": [
+      "deceit",
+      "power"
+    ]
+  },
+  {
+    "quote": "How like a winter hath my absence been from thee.",
+    "play": "Sonnets",
+    "character": "Shakespeare",
+    "sonnet": 97,
+    "tags": [
+      "love",
+      "grief"
+    ]
+  },
+  {
+    "quote": "To me, fair friend, you never can be old.",
+    "play": "Sonnets",
+    "character": "Shakespeare",
+    "sonnet": 104,
+    "tags": [
+      "friendship",
+      "age"
+    ]
+  },
+  {
+    "quote": "Let me not to the marriage of true minds admit impediments.",
+    "play": "Sonnets",
+    "character": "Shakespeare",
+    "sonnet": 116,
+    "tags": [
+      "love"
+    ]
+  },
+  {
+    "quote": "Love is not love which alters when it alteration finds.",
+    "play": "Sonnets",
+    "character": "Shakespeare",
+    "sonnet": 116,
+    "tags": [
+      "love"
+    ]
+  },
+  {
+    "quote": "Love alters not with his brief hours and weeks, but bears it out even to the edge of doom.",
+    "play": "Sonnets",
+    "character": "Shakespeare",
+    "sonnet": 116,
+    "tags": [
+      "love",
+      "time"
+    ]
+  },
+  {
+    "quote": "The expense of spirit in a waste of shame is lust in action.",
+    "play": "Sonnets",
+    "character": "Shakespeare",
+    "sonnet": 129,
+    "tags": [
+      "guilt"
+    ]
+  },
+  {
+    "quote": "My mistress' eyes are nothing like the sun.",
+    "play": "Sonnets",
+    "character": "Shakespeare",
+    "sonnet": 130,
+    "tags": [
+      "love"
+    ]
+  },
+  {
+    "quote": "When my love swears that she is made of truth, I do believe her, though I know she lies.",
+    "play": "Sonnets",
+    "character": "Shakespeare",
+    "sonnet": 138,
+    "tags": [
+      "love",
+      "deceit"
+    ]
+  },
+  {
+    "quote": "And death once dead, there's no more dying then.",
+    "play": "Sonnets",
+    "character": "Shakespeare",
+    "sonnet": 146,
+    "tags": [
+      "death"
+    ]
   }
 ]

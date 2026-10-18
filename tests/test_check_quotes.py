@@ -13,8 +13,20 @@ SOURCE = """\
 The Project Gutenberg eBook
 *** START OF THE PROJECT GUTENBERG EBOOK ***
                     Contents
+    THE SONNETS
     THE TRAGEDY OF MACBETH
     TWELFTH NIGHT; OR, WHAT YOU WILL
+
+THE SONNETS
+
+                    18
+
+Shall I compare thee to a summer’s day?
+Thou art more lovely and more temperate:
+
+                    19
+
+Devouring Time, blunt thou the lion’s paws,
 
 THE TRAGEDY OF MACBETH
 
@@ -64,7 +76,7 @@ def test_normalize_handles_elisions_and_spelling():
 
 def test_index_skips_contents_and_tracks_location(works):
     words, where = works
-    play, act, scene, speaker, _ = where[words.index("serpent")]
+    play, act, scene, speaker, _, sonnet = where[words.index("serpent")]
     assert (play, act, scene, speaker) == ("Macbeth", "I", "V", "LADY MACBETH")
     assert "aside" not in words  # stage directions are dropped
 
@@ -111,6 +123,31 @@ def test_wrong_act_or_scene_is_reported(works, capsys):
     problems, out = run([quote], works, capsys)
     assert problems == 1
     assert "found in Act V, Scene V, not Act V, Scene III" in out
+
+
+def sonnet(text, number=None):
+    q = {"quote": text, "play": "Sonnets", "character": "Shakespeare"}
+    return {**q, "sonnet": number} if number else q
+
+
+def test_sonnets_are_found_with_their_number(works, capsys):
+    good = sonnet("Shall I compare thee to a summer's day?")
+    problems, out = run([good, sonnet("Devouring Time, blunt thou the lion's paws.", 19)], works, capsys)
+    assert problems == 0
+    assert "Sonnet 18" in out and "Sonnet 19" in out
+
+
+def test_wrong_sonnet_number_is_reported(works, capsys):
+    problems, out = run([sonnet("Shall I compare thee to a summer's day?", 116)], works, capsys)
+    assert problems == 1
+    assert "found in Sonnet 18, not Sonnet 116" in out
+
+
+def test_write_refs_sets_sonnet_number(works, capsys):
+    q = sonnet("Thou art more lovely and more temperate.")
+    cq.check([q], *works, write_refs=True)
+    capsys.readouterr()
+    assert q["sonnet"] == 18 and "act" not in q
 
 
 @pytest.mark.parametrize("character, speaker, play", [

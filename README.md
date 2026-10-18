@@ -48,9 +48,11 @@ If the Mac is asleep at the scheduled hour, the quote changes when it wakes.
 launchctl kickstart -k gui/$(id -u)/com.shakespeare.wallpaper       # trigger the daily agent
 ```
 
-- Quotes: `quotes.json` — 214 quotes from 36 plays, each with `quote`, `play`, `character` and
-  optionally `act` and `scene` (shown in the attribution) and `tags` (27 themes such as love,
-  death, fate, time, ambition). Recently shown quotes are tracked in `state.json` and skipped
+- Quotes: `quotes.json` — 240 quotes: 214 from 36 plays and 26 from the Sonnets. Each has
+  `quote`, `play`, `character` and optionally `act` and `scene` (shown in the attribution) and
+  `tags` (27 themes such as love, death, fate, time, ambition). Sonnet quotes use
+  `"play": "Sonnets"`, `"character": "Shakespeare"` and a `sonnet` number instead of act/scene
+  (shown as "— SHAKESPEARE, SONNET 18"). Recently shown quotes are tracked in `state.json` and skipped
   until every quote (that matches the `--only` filter) has been shown.
 - Images: `~/Pictures/ShakespeareDaily/` (a new filename each run, since macOS caches wallpapers by path).
 - Logs: `logs/out.log`, `logs/err.log`.
@@ -92,12 +94,13 @@ Compares every entry in `quotes.json` with the
 `~/Library/Caches/shakespeare-quotes/`) and prints where each quote is found (play, act, scene,
 speaker), flagging wording that isn't found, the wrong play or a different speaker. Exits with
 status 1 if anything needs review. Punctuation, line breaks and spellings like *strain’d* are
-ignored; play names must match the list in `tools/check_quotes.py`.
+ignored; play names must match the list in `tools/check_quotes.py` (`Sonnets` for the sonnets,
+where the sonnet number is checked instead of the speaker).
 
-After adding quotes, `tools/check_quotes.py --write-refs` fills in `act` and `scene` for every
+After adding quotes, `tools/check_quotes.py --write-refs` fills in `act` and `scene` (or `sonnet`) for every
 quote that passes, and later runs report a reference that doesn't match the text.
 
-All 214 included quotes pass. Five are marked `CLOSE`: three use the wording common in quotation
+All 240 included quotes pass. Five are marked `CLOSE`: three use the wording common in quotation
 and in some other editions rather than Gutenberg's text — *What a piece of work is **a** man*
 (Gutenberg: "is man"), *by any other **word*** ("name") and *this **sun** of York* ("son", the
 line puns on both) — and two use modern spelling (*bedfellows*, *to untie*).

@@ -66,6 +66,7 @@ PLAY_TITLES = {
     "The Two Gentlemen of Verona": "THE TWO GENTLEMEN OF VERONA",
     "The Two Noble Kinsmen": "THE TWO NOBLE KINSMEN",
     "The Winter's Tale": "THE WINTER’S TALE",
+    "Sonnets": "THE SONNETS",
 }
 TITLE_TO_PLAY = {title: play for play, title in PLAY_TITLES.items()}
 
@@ -113,7 +114,10 @@ def load_source(source):
 
 
 def index_works(text):
-    """Word list of the plays, each word tagged with (play, act, scene, speaker, source line)."""
+    """Word list of the works, each word tagged with (play, act, scene, speaker, source line, sonnet).
+
+    "play" is "Sonnets" for the sonnets, which have a sonnet number instead of act/scene/speaker.
+    """
     lines = [line.strip() for line in text.splitlines()]
     start = next(i for i, line in enumerate(lines) if line.startswith("*** START"))
     end = next(i for i, line in enumerate(lines) if line.startswith("*** END"))
@@ -127,12 +131,15 @@ def index_works(text):
     headings = {i: play for play, i in heading_line.items()}
 
     words, where = [], []
-    play = act = scene = speaker = None
+    play = act = scene = speaker = sonnet = None
     for i, line in enumerate(lines):
         if i in headings:
-            play, act, scene, speaker = headings[i], None, None, None
+            play, act, scene, speaker, sonnet = headings[i], None, None, None, None
             continue
         if play is None or not line:
+            continue
+        if play == "Sonnets" and line.isdigit():  # each sonnet starts with its number on a line
+            sonnet = int(line)
             continue
         if ACT_LINE.match(line):
             act = ACT_LINE.match(line).group(1)
@@ -148,7 +155,7 @@ def index_works(text):
             continue
         for word in normalize_words(STAGE_DIRECTION.sub(" ", line)):
             words.append(word)
-            where.append((play, act, scene, speaker, line))
+            where.append((play, act, scene, speaker, line, sonnet))
     return words, where
 
 
@@ -190,7 +197,8 @@ def speaker_matches(character, speaker, play):
 def check(quotes, words, where, write_refs=False):
     """Print a report; returns the number of quotes with problems.
 
-    With write_refs, quotes without problems get "act" / "scene" set from the text (in place).
+    With write_refs, quotes without problems get "act" / "scene" (or "sonnet") set from the text
+    (in place).
     """
     positions = defaultdict(list)
     for i, word in enumerate(words):
@@ -209,10 +217,13 @@ def check(quotes, words, where, write_refs=False):
             status = "MISSING"
         else:
             status = "EXACT" if ratio >= 0.999 else f"CLOSE {ratio:.2f}"
-            play, act, scene, speaker, _ = where[start]
+            play, act, scene, speaker, _, sonnet = where[start]
             if play != q["play"]:
                 issues.append(f"found in {play}")
-            if not speaker_matches(q["character"], speaker, play):
+            if play == "Sonnets":
+                if "sonnet" in q and q["sonnet"] != sonnet:
+                    issues.append(f"found in Sonnet {sonnet}, not Sonnet {q['sonnet']}")
+            elif not speaker_matches(q["character"], speaker, play):
                 issues.append(f"spoken by {speaker}")
             if "act" in q and (q["act"], q.get("scene")) != (act, scene):
                 issues.append(f"found in Act {act}, Scene {scene}, not Act {q['act']}, Scene {q.get('scene')}")
@@ -220,12 +231,17 @@ def check(quotes, words, where, write_refs=False):
 
         print(f"{'!!' if issues else 'ok'} {status:<10} {q['quote'][:60]}")
         if found:
-            print(f"   {play} {act or '?'}.{scene or '?'} — {speaker}")
+            if play == "Sonnets":
+                print(f"   Sonnet {sonnet}")
+            else:
+                print(f"   {play} {act or '?'}.{scene or '?'} — {speaker}")
             if status != "EXACT":
                 end = min(start + len(quote_words), len(where) - 1)
                 source_lines = list(dict.fromkeys(w[4] for w in where[start:end + 1]))
                 print(f"   text: {' / '.join(source_lines)}")
-            if write_refs and not issues and act and scene:
+            if write_refs and not issues and sonnet:
+                q["sonnet"] = sonnet
+            elif write_refs and not issues and act and scene:
                 q["act"], q["scene"] = act, scene
         for issue in issues:
             print(f"   -> {issue} (quotes.json says {q['character']}, {q['play']})")

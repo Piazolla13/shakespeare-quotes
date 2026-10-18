@@ -229,12 +229,17 @@ def layout(draw, text, width, height):
         size = round(size * 0.92)
 
 
+def work_title(quote):
+    """"Hamlet", or "Sonnet 18" for a sonnet."""
+    return f"Sonnet {quote['sonnet']}" if quote.get("sonnet") else quote["play"]
+
+
 def attribution_text(quote):
     # Name it once when the character is the title role (Hamlet, Macbeth, ...)
     if quote["character"] == quote["play"]:
         text = f"— {quote['play']}"
     else:
-        text = f"— {quote['character']}, {quote['play']}"
+        text = f"— {quote['character']}, {work_title(quote)}"
     if quote.get("act"):
         text += f" · Act {quote['act']}"
         if quote.get("scene"):

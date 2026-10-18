@@ -225,7 +225,7 @@ class ShakespeareApp(rumps.App):
         quote = sw.current_quote()
         if quote:
             self.quote_item.title = truncate(f"“{quote['quote']}”")
-            self.attribution_item.title = f"— {quote['character']}, {quote['play']}"
+            self.attribution_item.title = f"— {quote['character']}, {sw.work_title(quote)}"
         else:
             self.quote_item.title = "No quote yet"
             self.attribution_item.title = ""
@@ -260,7 +260,7 @@ class ShakespeareApp(rumps.App):
         if not quote:
             alert("No current quote to remove.")
             return
-        choice = alert("Remove this quote?", f"“{quote['quote']}”\n— {quote['character']}, {quote['play']}",
+        choice = alert("Remove this quote?", f"“{quote['quote']}”\n— {quote['character']}, {sw.work_title(quote)}",
                        buttons=("Remove", "Cancel"))
         if choice != 0:
             return

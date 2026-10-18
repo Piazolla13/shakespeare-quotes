@@ -91,3 +91,9 @@ def test_attribution_includes_act_and_scene():
     quote = {"quote": "x", "play": "Twelfth Night", "character": "Malvolio", "act": "II", "scene": "V"}
     assert sw.attribution_text(quote) == "— MALVOLIO, TWELFTH NIGHT · ACT II, SCENE V"
     assert sw.attribution_text({**SHORT, "act": "V"}) == "— HAMLET · ACT V"
+
+
+def test_attribution_for_sonnets():
+    quote = {"quote": "x", "play": "Sonnets", "character": "Shakespeare", "sonnet": 18}
+    assert sw.attribution_text(quote) == "— SHAKESPEARE, SONNET 18"
+    assert sw.work_title(quote) == "Sonnet 18"
