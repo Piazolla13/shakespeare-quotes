@@ -13,32 +13,40 @@ The macOS lock screen shows the main display's wallpaper, so the quote appears t
 
 Requires macOS (tested on macOS 27 with the system Python 3.9) and uses only fonts that ship with macOS.
 
-## Setup
-
-The plists in `launchd/` contain absolute paths to `/Users/main/dev/shakespeare-quotes`.
-If you cloned the repository somewhere else, replace that path in both files first.
+## Install
 
 ```sh
-/usr/bin/python3 -m venv .venv
-.venv/bin/pip install -r requirements.txt
-cp launchd/com.shakespeare.wallpaper.plist ~/Library/LaunchAgents/
-launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.shakespeare.wallpaper.plist
+git clone https://github.com/Piazolla13/shakespeare-quotes.git
+cd shakespeare-quotes
+./install.sh
 ```
+
+`install.sh` creates `.venv` with the system Python (if `/usr/bin/python3` is missing, macOS offers
+to install the Command Line Tools: `xcode-select --install`), installs the dependencies, and loads
+two LaunchAgents generated for wherever you cloned the repository. The wallpaper changes right away.
+
+| Option | |
+|---|---|
+| `--hour 7` | change the quote at 07:00 instead of 04:00 |
+| `--no-menubar` | install the daily wallpaper only |
+| `--dry-run DIR` | write the generated plists to `DIR` to inspect them; installs nothing |
+| `--uninstall` | unload and remove both agents (keeps `.venv` and the images) |
+
+Run `./install.sh` again after moving the folder or changing the templates in `launchd/`.
+If the Mac is asleep at the scheduled hour, the quote changes when it wakes.
 
 ## Usage
 
 ```sh
 .venv/bin/python shakespeare_wallpaper.py                           # new quote now
 .venv/bin/python shakespeare_wallpaper.py --dry-run --output /tmp/x # render only
-launchctl kickstart -k gui/$(id -u)/com.shakespeare.wallpaper       # trigger the agent
-launchctl bootout gui/$(id -u)/com.shakespeare.wallpaper            # uninstall
+launchctl kickstart -k gui/$(id -u)/com.shakespeare.wallpaper       # trigger the daily agent
 ```
 
 - Quotes: `quotes.json` (`quote`, `play`, `character`). Recently shown quotes are tracked in
   `state.json` and skipped until every quote has been used.
 - Images: `~/Pictures/ShakespeareDaily/` (a new filename each run, since macOS caches wallpapers by path).
 - Logs: `logs/out.log`, `logs/err.log`.
-- After editing the plist, copy it again and `bootout` + `bootstrap`.
 
 ## Menu bar app
 
@@ -46,13 +54,6 @@ launchctl bootout gui/$(id -u)/com.shakespeare.wallpaper            # uninstall
 **Add Quote…**, **Remove Current Quote…**, **Edit quotes.json…**, **Open Wallpaper Folder**.
 It also redraws the wallpaper when a display is connected or removed. The daily change above
 keeps working whether or not the app is running.
-
-```sh
-.venv/bin/python menubar.py                                       # try it from a terminal
-cp launchd/com.shakespeare.menubar.plist ~/Library/LaunchAgents/
-launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.shakespeare.menubar.plist
-launchctl bootout gui/$(id -u)/com.shakespeare.menubar            # uninstall
-```
 
 The agent starts the app at login and restarts it after a crash; choosing **Quit** keeps it closed
 until the next login. Logs: `logs/menubar.out.log`, `logs/menubar.err.log`.

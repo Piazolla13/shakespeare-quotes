@@ -6,23 +6,23 @@
     <string>com.shakespeare.wallpaper</string>
     <key>ProgramArguments</key>
     <array>
-        <string>/Users/main/dev/shakespeare-quotes/.venv/bin/python</string>
-        <string>/Users/main/dev/shakespeare-quotes/shakespeare_wallpaper.py</string>
+        <string>@PROJECT_DIR@/.venv/bin/python</string>
+        <string>@PROJECT_DIR@/shakespeare_wallpaper.py</string>
     </array>
     <key>WorkingDirectory</key>
-    <string>/Users/main/dev/shakespeare-quotes</string>
+    <string>@PROJECT_DIR@</string>
     <key>StartCalendarInterval</key>
     <dict>
         <key>Hour</key>
-        <integer>4</integer>
+        <integer>@HOUR@</integer>
         <key>Minute</key>
         <integer>0</integer>
     </dict>
     <key>RunAtLoad</key>
     <true/>
     <key>StandardOutPath</key>
-    <string>/Users/main/dev/shakespeare-quotes/logs/out.log</string>
+    <string>@PROJECT_DIR@/logs/out.log</string>
     <key>StandardErrorPath</key>
-    <string>/Users/main/dev/shakespeare-quotes/logs/err.log</string>
+    <string>@PROJECT_DIR@/logs/err.log</string>
 </dict>
 </plist>

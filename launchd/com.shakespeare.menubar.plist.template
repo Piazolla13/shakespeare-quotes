@@ -6,11 +6,11 @@
     <string>com.shakespeare.menubar</string>
     <key>ProgramArguments</key>
     <array>
-        <string>/Users/main/dev/shakespeare-quotes/.venv/bin/python</string>
-        <string>/Users/main/dev/shakespeare-quotes/menubar.py</string>
+        <string>@PROJECT_DIR@/.venv/bin/python</string>
+        <string>@PROJECT_DIR@/menubar.py</string>
     </array>
     <key>WorkingDirectory</key>
-    <string>/Users/main/dev/shakespeare-quotes</string>
+    <string>@PROJECT_DIR@</string>
     <key>RunAtLoad</key>
     <true/>
     <key>KeepAlive</key>
@@ -21,8 +21,8 @@
     <key>ProcessType</key>
     <string>Interactive</string>
     <key>StandardOutPath</key>
-    <string>/Users/main/dev/shakespeare-quotes/logs/menubar.out.log</string>
+    <string>@PROJECT_DIR@/logs/menubar.out.log</string>
     <key>StandardErrorPath</key>
-    <string>/Users/main/dev/shakespeare-quotes/logs/menubar.err.log</string>
+    <string>@PROJECT_DIR@/logs/menubar.err.log</string>
 </dict>
 </plist>
