@@ -96,8 +96,9 @@ def save_state(path, state):
     write_json(path, state)
 
 
-def add_quote(quote, path=QUOTES_PATH):
+def add_quote(quote, path=None):
     """Validate and append a quote dict; raises ValueError with a user-facing message."""
+    path = path or QUOTES_PATH
     quote = {key: str(quote.get(key, "")).strip() for key in ("quote", "play", "character")}
     empty = [key for key, value in quote.items() if not value]
     if empty:
@@ -109,7 +110,9 @@ def add_quote(quote, path=QUOTES_PATH):
     return quote
 
 
-def remove_quote(text, path=QUOTES_PATH, state_path=STATE_PATH):
+def remove_quote(text, path=None, state_path=None):
+    path = path or QUOTES_PATH
+    state_path = state_path or STATE_PATH
     quotes = load_quotes(path)
     remaining = [q for q in quotes if q["quote"] != text]
     if len(remaining) == len(quotes):
@@ -181,6 +184,13 @@ def layout(draw, text, width, height):
         size = round(size * 0.92)
 
 
+def attribution_text(quote):
+    # Name it once when the character is the title role (Hamlet, Macbeth, ...)
+    if quote["character"] == quote["play"]:
+        return f"— {quote['play']}".upper()
+    return f"— {quote['character']}, {quote['play']}".upper()
+
+
 def render(quote, width, height):
     image = gradient_background(width, height)
     draw = ImageDraw.Draw(image)
@@ -188,10 +198,7 @@ def render(quote, width, height):
     text = f"“{quote['quote'].strip().replace(chr(39), '’')}”"
     font, lines, line_height = layout(draw, text, width, height)
     attr_font = load_font(ATTRIBUTION_FONTS, round(font.size * 0.5))
-    if quote["character"] == quote["play"]:
-        attribution = f"— {quote['play']}".upper()
-    else:
-        attribution = f"— {quote['character']}, {quote['play']}".upper()
+    attribution = attribution_text(quote)
 
     gap = font.size * 0.9
     rule_gap = font.size * 0.6
@@ -248,9 +255,9 @@ def cleanup(output_dir, keep):
             old.unlink()
 
 
-def apply_quote(quote, output_dir=OUTPUT_DIR, dry_run=False):
+def apply_quote(quote, output_dir=None, dry_run=False):
     """Render the quote for every connected screen and set it as the wallpaper."""
-    output_dir = Path(output_dir)
+    output_dir = Path(output_dir or OUTPUT_DIR)
     output_dir.mkdir(parents=True, exist_ok=True)
     # Microseconds keep filenames unique across quick re-renders (macOS caches by path)
     stamp = datetime.now().strftime("%Y%m%d-%H%M%S-%f")
@@ -267,7 +274,7 @@ def apply_quote(quote, output_dir=OUTPUT_DIR, dry_run=False):
     return written
 
 
-def show_quote(quote, output_dir=OUTPUT_DIR, dry_run=False, state=None):
+def show_quote(quote, output_dir=None, dry_run=False, state=None):
     """Set the quote as wallpaper and record it as current (and recently shown)."""
     log.info("Quote: %s (%s, %s)", quote["quote"], quote["character"], quote["play"])
     apply_quote(quote, output_dir, dry_run)
@@ -282,7 +289,7 @@ def show_quote(quote, output_dir=OUTPUT_DIR, dry_run=False, state=None):
     return quote
 
 
-def next_quote(output_dir=OUTPUT_DIR, dry_run=False):
+def next_quote(output_dir=None, dry_run=False):
     """Pick a fresh quote and show it."""
     state = load_state(STATE_PATH)
     quote = pick_quote(load_quotes(QUOTES_PATH), state)
