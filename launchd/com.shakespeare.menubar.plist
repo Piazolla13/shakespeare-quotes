@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.shakespeare.menubar</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/Users/main/dev/shakespeare-quotes/.venv/bin/python</string>
+        <string>/Users/main/dev/shakespeare-quotes/menubar.py</string>
+    </array>
+    <key>WorkingDirectory</key>
+    <string>/Users/main/dev/shakespeare-quotes</string>
+    <key>RunAtLoad</key>
+    <true/>
+    <key>KeepAlive</key>
+    <dict>
+        <key>SuccessfulExit</key>
+        <false/>
+    </dict>
+    <key>ProcessType</key>
+    <string>Interactive</string>
+    <key>StandardOutPath</key>
+    <string>/Users/main/dev/shakespeare-quotes/logs/menubar.out.log</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/main/dev/shakespeare-quotes/logs/menubar.err.log</string>
+</dict>
+</plist>
