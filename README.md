@@ -114,23 +114,6 @@ they never change your wallpaper or your quote list. `tests/test_render.py` rend
 `quotes.json` and checks that the text stays clear of the lock-screen clock and password field, so
 run the tests after adding quotes.
 
-## Possible next steps
-
-**Package as a macOS app (considered, not planned).** A `Shakespeare Wallpaper.app` built with
-[py2app](https://py2app.readthedocs.io/) would show its own name and icon in Activity Monitor and
-Login Items instead of "Python", and could be installed without the venv. It was deliberately
-skipped for now:
-
-- Without a paid Apple Developer account to sign and notarize it, macOS Gatekeeper blocks a
-  downloaded copy until the user overrides it in System Settings — a worse first run than
-  `./install.sh` for anyone cloning this repository.
-- The app would have to take over the daily 04:00 change and start itself at login, replacing the
-  two LaunchAgents and `install.sh`.
-- It bundles its own Python, Pillow and PyObjC (tens of MB) and needs a build step and CI job.
-
-Smaller alternatives that keep the current setup: a custom menu bar icon instead of ❦, or setting
-the process name so the app shows as "Shakespeare Wallpaper" in Activity Monitor.
-
 ## License
 
 [MIT](LICENSE)
