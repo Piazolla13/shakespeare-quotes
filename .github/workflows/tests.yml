@@ -1,0 +1,34 @@
+name: tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    # macOS only: the code uses AppKit and the fonts that ship with macOS
+    runs-on: macos-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # "system" = /usr/bin/python3 from the Command Line Tools, what install.sh uses
+        python: [system, "3.13"]
+    name: macOS / Python ${{ matrix.python }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        if: matrix.python != 'system'
+        with:
+          python-version: ${{ matrix.python }}
+
+      - name: Install dependencies
+        run: |
+          if [ "${{ matrix.python }}" = system ]; then PY=/usr/bin/python3; else PY=python; fi
+          "$PY" --version
+          "$PY" -m venv .venv
+          .venv/bin/python -m pip install --upgrade pip
+          .venv/bin/python -m pip install -r requirements-dev.txt
+
+      - name: Run tests
+        run: .venv/bin/python -m pytest -v

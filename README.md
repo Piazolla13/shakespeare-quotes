@@ -1,5 +1,7 @@
 # Shakespeare Daily Wallpaper
 
+[![tests](https://github.com/Piazolla13/shakespeare-quotes/actions/workflows/tests.yml/badge.svg)](https://github.com/Piazolla13/shakespeare-quotes/actions/workflows/tests.yml)
+
 Sets a new Shakespeare quote as the wallpaper on every display once a day (04:00, and at login).
 The macOS lock screen shows the main display's wallpaper, so the quote appears there too.
 
