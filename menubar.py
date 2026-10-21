@@ -13,6 +13,7 @@ from collections import Counter
 
 import objc
 import rumps
+import rumps.events
 from AppKit import (
     NSAlert,
     NSAlertFirstButtonReturn,
@@ -27,8 +28,10 @@ from AppKit import (
     NSView,
 )
 from Foundation import NSDistributedNotificationCenter, NSNotificationCenter, NSObject
+from PyObjCTools import AppHelper
 
 import shakespeare_wallpaper as sw
+from manager import QuoteManager
 
 MENU_TITLE = "❦"
 MAX_ITEM_CHARS = 60
@@ -154,6 +157,7 @@ class ShakespeareApp(rumps.App):
             rumps.MenuItem("New Quote Now", callback=self.new_quote),
             rumps.MenuItem("Add Quote…", callback=self.add_quote),
             rumps.MenuItem("Remove Current Quote…", callback=self.remove_quote),
+            rumps.MenuItem("Manage Quotes…", callback=self.manage_quotes),
             self.filter_menu,
             theme_menu,
             None,
@@ -162,6 +166,7 @@ class ShakespeareApp(rumps.App):
             None,
         ]
         self.state_mtime = None
+        self.manager = None  # quote manager web server, started on first use
 
         self.screen_observer = DebouncedObserver.alloc().initWithCallback_(self.screens_changed)
         NSNotificationCenter.defaultCenter().addObserver_selector_name_object_(
@@ -186,7 +191,7 @@ class ShakespeareApp(rumps.App):
 
         if self.filter_items:
             self.filter_menu.clear()
-        self.filter_items = {None: rumps.MenuItem("All Quotes", callback=self.choose_filter)}
+        self.filter_items = {None: rumps.MenuItem(f"All Quotes ({len(quotes)})", callback=self.choose_filter)}
         for tag, count in sorted(tags.items(), key=lambda kv: (-kv[1], kv[0])):
             self.filter_items[("tag", tag)] = rumps.MenuItem(f"{tag.capitalize()} ({count})",
                                                              callback=self.choose_filter)
@@ -232,7 +237,7 @@ class ShakespeareApp(rumps.App):
 
     @guarded
     def new_quote(self, _):
-        sw.next_quote()
+        sw.next_quote(reason="new-quote")
         self.refresh()
 
     @guarded
@@ -251,7 +256,7 @@ class ShakespeareApp(rumps.App):
             break
         log.info("Added quote: %s", quote["quote"])
         if show_now:
-            sw.show_quote(quote)
+            sw.show_quote(quote, reason="add")
             self.refresh()
 
     @guarded
@@ -270,7 +275,23 @@ class ShakespeareApp(rumps.App):
             alert("Couldn’t remove quote", str(e))
             return
         log.info("Removed quote: %s", quote["quote"])
-        sw.next_quote()
+        sw.next_quote(reason="remove")
+        self.refresh()
+
+    @guarded
+    def manage_quotes(self, _):
+        if self.manager is None:
+            imported = sw.import_history_from_logs()  # one-off: start the history from the logs
+            if imported:
+                log.info("Imported %d past quote changes from the logs into the history", imported)
+            # Wallpaper changes from the page run on the main thread; the menu refreshes after them
+            self.manager = QuoteManager(run_on_main=AppHelper.callAfter,
+                                        on_change=lambda: AppHelper.callAfter(self.refresh_now))
+            rumps.events.before_quit.register(self.manager.stop)
+        self.manager.open_in_browser()
+
+    def refresh_now(self):
+        self.quotes_mtime = self.state_mtime = None  # changes within the same second still count
         self.refresh()
 
     def edit_quotes(self, _):
@@ -285,7 +306,7 @@ class ShakespeareApp(rumps.App):
         key = next(k for k, item in self.filter_items.items() if item is sender)
         sw.set_filter(dict([key]) if key else None)
         log.info("Quotes from %s", key or "all")
-        sw.next_quote()
+        sw.next_quote(reason="filter")
         self.refresh()
 
     @guarded

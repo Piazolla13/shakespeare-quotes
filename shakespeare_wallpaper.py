@@ -15,12 +15,15 @@ The lock screen shows the main display's wallpaper, so the quote appears there t
 """
 
 import argparse
+import hashlib
 import json
 import logging
 import os
 import random
+import re
 import tempfile
 import sys
+from collections import Counter
 from datetime import datetime
 from pathlib import Path
 
@@ -29,6 +32,8 @@ from PIL import Image, ImageDraw, ImageFont
 PROJECT_DIR = Path(__file__).resolve().parent
 QUOTES_PATH = PROJECT_DIR / "quotes.json"
 STATE_PATH = PROJECT_DIR / "state.json"
+HISTORY_PATH = PROJECT_DIR / "history.json"
+LOG_DIR = PROJECT_DIR / "logs"
 OUTPUT_DIR = Path.home() / "Pictures" / "ShakespeareDaily"
 FILE_PREFIX = "shakespeare_"
 
@@ -357,8 +362,11 @@ def apply_quote(quote, output_dir=None, dry_run=False, theme=None):
     return written
 
 
-def show_quote(quote, output_dir=None, dry_run=False, state=None, theme=None):
-    """Set the quote as wallpaper and record it as current (and recently shown)."""
+def show_quote(quote, output_dir=None, dry_run=False, state=None, theme=None, reason="manual"):
+    """Set the quote as wallpaper and record it as current, recently shown and in the history.
+
+    reason says what triggered the change ("daily", "new-quote", "filter", ...) for the history.
+    """
     log.info("Quote: %s (%s, %s)", quote["quote"], quote["character"], quote["play"])
     apply_quote(quote, output_dir, dry_run, theme)
     if not dry_run:
@@ -369,20 +377,116 @@ def show_quote(quote, output_dir=None, dry_run=False, state=None, theme=None):
             recent.append(quote["quote"])
         state["current"] = quote
         save_state(STATE_PATH, state)
+        record_history(quote, reason)
     return quote
 
 
-def next_quote(output_dir=None, dry_run=False, theme=None, quote_filter=None):
+def next_quote(output_dir=None, dry_run=False, theme=None, quote_filter=None, reason="manual"):
     """Pick a fresh quote and show it; quote_filter overrides the saved filter for this pick."""
     state = load_state(STATE_PATH)
     if quote_filter is not None:
         state["filter"] = quote_filter or None
     quote = pick_quote(load_quotes(QUOTES_PATH), state)
-    return show_quote(quote, output_dir, dry_run, state, theme)
+    return show_quote(quote, output_dir, dry_run, state, theme, reason)
 
 
 def current_quote():
     return load_state(STATE_PATH).get("current")
+
+
+# History and statistics
+
+def quote_id(quote):
+    """Stable short id from the quote text (quote texts are unique, see add_quote)."""
+    text = " ".join(quote["quote"].casefold().split())
+    return hashlib.sha1(text.encode("utf-8")).hexdigest()[:10]
+
+
+def find_quote(qid, quotes=None):
+    for q in quotes if quotes is not None else load_quotes(QUOTES_PATH):
+        if quote_id(q) == qid:
+            return q
+    return None
+
+
+def load_history():
+    """Display history, oldest first: [{"at", "quote", "play", "character", "reason", ...}]."""
+    try:
+        with open(HISTORY_PATH, encoding="utf-8") as f:
+            history = json.load(f)
+        return history if isinstance(history, list) else []
+    except (FileNotFoundError, json.JSONDecodeError):
+        return []
+
+
+def history_entry(quote, reason, at=None):
+    # A snapshot of the quote, so entries still make sense after the quote is removed
+    entry = {"at": at or datetime.now().isoformat(timespec="seconds"), "reason": reason}
+    entry.update({k: quote[k] for k in ("quote", "play", "character", "sonnet") if k in quote})
+    return entry
+
+
+def record_history(quote, reason):
+    write_json(HISTORY_PATH, load_history() + [history_entry(quote, reason)])
+
+
+def launched_by_launchd():
+    # launchd sets XPC_SERVICE_NAME to the job label for the processes it starts
+    return os.environ.get("XPC_SERVICE_NAME") == "com.shakespeare.wallpaper"
+
+
+LOG_QUOTE_LINE = re.compile(r"^(\d{4}-\d\d-\d\d \d\d:\d\d:\d\d),\d+ INFO Quote: (.*)$")
+
+
+def history_from_logs(log_paths, quotes):
+    """Past changes from the "Quote:" log lines, for quotes still in the list (oldest first)."""
+    by_prefix = {f"{q['quote']} (": q for q in quotes}
+    entries = []
+    for path in log_paths:
+        try:
+            lines = Path(path).read_text(encoding="utf-8").splitlines()
+        except FileNotFoundError:
+            continue
+        for line in lines:
+            m = LOG_QUOTE_LINE.match(line)
+            if not m:
+                continue
+            quote = next((q for prefix, q in by_prefix.items() if m.group(2).startswith(prefix)), None)
+            if quote:
+                entries.append(history_entry(quote, "log", at=m.group(1).replace(" ", "T")))
+    return sorted(entries, key=lambda e: e["at"])
+
+
+def import_history_from_logs():
+    """One-off: fill an empty history from the logs. Returns the number of entries imported."""
+    if load_history():
+        return 0
+    entries = history_from_logs([LOG_DIR / "out.log", LOG_DIR / "menubar.out.log"], load_quotes(QUOTES_PATH))
+    if entries:
+        write_json(HISTORY_PATH, entries)
+    return len(entries)
+
+
+def collection_stats(quotes, state, history):
+    """Numbers for the manager page."""
+    shown = Counter(e["quote"] for e in history)
+    pool = [q for q in quotes if matches_filter(q, state.get("filter"))] or quotes
+    recent = set(state.get("recent", []))
+    plays = Counter(q["play"] for q in quotes)
+    return {
+        "total": len(quotes),
+        "plays": len([p for p in plays if p != "Sonnets"]),
+        "sonnet_quotes": plays.get("Sonnets", 0),
+        "by_play": plays.most_common(),
+        "by_tag": Counter(t for q in quotes for t in q.get("tags", [])).most_common(),
+        "top_characters": Counter(q["character"] for q in quotes).most_common(15),
+        "round": {"shown": sum(q["quote"] in recent for q in pool), "pool": len(pool),
+                  "filter": state.get("filter")},
+        "never_shown": sum(q["quote"] not in shown for q in quotes),
+        "most_shown": [{"quote": text, "count": n} for text, n in shown.most_common(10)],
+        "history_total": len(history),
+        "changes_by_reason": Counter(e.get("reason", "?") for e in history).most_common(),
+    }
 
 
 def main():
@@ -416,7 +520,8 @@ def main():
         set_theme(args.theme)
     if quote_filter is not None and not args.dry_run:
         set_filter(quote_filter or None)
-    next_quote(args.output, args.dry_run, args.theme, quote_filter)
+    next_quote(args.output, args.dry_run, args.theme, quote_filter,
+               reason="daily" if launched_by_launchd() else "cli")
 
 
 if __name__ == "__main__":

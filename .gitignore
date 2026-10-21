@@ -3,3 +3,4 @@ state.json
 logs/*.log
 __pycache__/
 .pytest_cache/
+history.json

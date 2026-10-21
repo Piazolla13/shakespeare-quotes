@@ -9,12 +9,14 @@ REAL_QUOTES = sw.QUOTES_PATH
 
 @pytest.fixture
 def project(tmp_path, monkeypatch):
-    """Point the module at a temp copy of quotes.json and empty state/output locations."""
+    """Point the module at a temp copy of quotes.json and empty state/history/output locations."""
     quotes = tmp_path / "quotes.json"
     shutil.copy(REAL_QUOTES, quotes)
     monkeypatch.setattr(sw, "QUOTES_PATH", quotes)
     monkeypatch.setattr(sw, "STATE_PATH", tmp_path / "state.json")
     monkeypatch.setattr(sw, "OUTPUT_DIR", tmp_path / "out")
+    monkeypatch.setattr(sw, "HISTORY_PATH", tmp_path / "history.json")
+    monkeypatch.setattr(sw, "LOG_DIR", tmp_path / "logs")
     return tmp_path
 
 

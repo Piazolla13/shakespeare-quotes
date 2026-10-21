@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quote Manager</title>
+<style>
+  :root {
+    --bg: #f3ead5; --panel: #fbf6ea; --text: #34261c; --muted: #7a6a58; --accent: #7a2a22;
+    --line: #e1d3b5; --bar: #c9a96e; --current: #f0dfb4; --danger: #a3271c;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #101116; --panel: #1a1c24; --text: #eee4ce; --muted: #9c937f; --accent: #c9a96e;
+      --line: #2c2f3a; --bar: #b0966a; --current: #2e2a1f; --danger: #e0705f;
+      color-scheme: dark;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text);
+         font: 15px/1.45 -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif; }
+  header { padding: 20px 24px 0; }
+  h1 { font: italic 600 28px/1.2 "Hoefler Text", Baskerville, Georgia, serif; margin: 0 0 4px; }
+  .summary { color: var(--muted); margin: 0 0 14px; }
+  nav { display: flex; gap: 4px; border-bottom: 1px solid var(--line); padding: 0 24px; }
+  nav button { background: none; border: 0; border-bottom: 2px solid transparent; color: var(--muted);
+               font: inherit; padding: 8px 12px; cursor: pointer; }
+  nav button[aria-selected="true"] { color: var(--text); border-bottom-color: var(--accent); font-weight: 600; }
+  main { padding: 16px 24px 40px; }
+  section[hidden] { display: none; }
+  .controls { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; align-items: center; }
+  input[type=search], select { font: inherit; padding: 6px 10px; border: 1px solid var(--line);
+                               border-radius: 6px; background: var(--panel); color: var(--text); }
+  input[type=search] { flex: 1 1 220px; min-width: 0; }
+  label.check { color: var(--muted); display: flex; gap: 6px; align-items: center; }
+  .count { color: var(--muted); margin-left: auto; }
+  table { width: 100%; border-collapse: collapse; background: var(--panel); border-radius: 8px; overflow: hidden; }
+  th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { font-size: 12px; text-transform: uppercase; letter-spacing: .04em; color: var(--muted);
+       cursor: pointer; user-select: none; white-space: nowrap; }
+  th[data-sort]::after { content: ""; }
+  th.asc::after { content: " ▲"; } th.desc::after { content: " ▼"; }
+  td.quote { font-family: "Hoefler Text", Baskerville, Georgia, serif; font-size: 16px; font-style: italic; }
+  td.num { text-align: right; font-variant-numeric: tabular-nums; }
+  tr.current td { background: var(--current); }
+  .badge { display: inline-block; font-size: 11px; font-style: normal; font-family: -apple-system, sans-serif;
+           color: var(--accent); border: 1px solid var(--accent); border-radius: 10px; padding: 0 7px; margin-left: 6px; }
+  .tag { display: inline-block; font-size: 12px; color: var(--muted); border: 1px solid var(--line);
+         border-radius: 10px; padding: 0 7px; margin: 1px 2px 1px 0; cursor: pointer; }
+  .ref { color: var(--muted); font-size: 13px; }
+  td.actions { white-space: nowrap; }
+  button.small { font: inherit; font-size: 13px; padding: 3px 9px; border-radius: 6px; cursor: pointer;
+                 border: 1px solid var(--line); background: var(--bg); color: var(--text); }
+  button.small:hover { border-color: var(--accent); }
+  button.danger { color: var(--danger); }
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-bottom: 20px; }
+  .card { background: var(--panel); border-radius: 8px; padding: 12px 14px; }
+  .card .big { font-size: 28px; font-weight: 600; font-variant-numeric: tabular-nums; }
+  .card .label { color: var(--muted); font-size: 13px; }
+  .progress { height: 6px; background: var(--line); border-radius: 3px; margin-top: 8px; overflow: hidden; }
+  .progress div { height: 100%; background: var(--accent); }
+  .charts { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
+  .chart { background: var(--panel); border-radius: 8px; padding: 12px 14px; }
+  .chart h2, .history h2 { font-size: 14px; margin: 0 0 10px; }
+  .bar-row { display: grid; grid-template-columns: minmax(90px, 40%) 1fr 34px; gap: 8px; align-items: center;
+             font-size: 13px; margin: 3px 0; }
+  .bar-row .name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .bar-row .bar { height: 10px; background: var(--bar); border-radius: 2px; }
+  .bar-row .n { text-align: right; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .history .day { background: var(--panel); border-radius: 8px; padding: 10px 14px; margin-bottom: 12px; }
+  .history .entry { display: grid; grid-template-columns: 52px 1fr auto; gap: 10px; padding: 5px 0;
+                    border-top: 1px solid var(--line); font-size: 14px; }
+  .history .entry:first-of-type { border-top: 0; }
+  .history .time, .history .reason { color: var(--muted); font-variant-numeric: tabular-nums; font-size: 13px; }
+  .history .q { font-family: "Hoefler Text", Baskerville, Georgia, serif; font-style: italic; }
+  .empty { color: var(--muted); padding: 20px 0; }
+  #toast { position: fixed; bottom: 18px; left: 50%; transform: translateX(-50%); background: var(--text);
+           color: var(--bg); padding: 8px 16px; border-radius: 8px; opacity: 0; transition: opacity .2s;
+           pointer-events: none; max-width: calc(100% - 32px); }
+  #toast.show { opacity: 1; }
+  @media (max-width: 700px) {
+    header, main { padding-left: 16px; padding-right: 16px; } nav { padding: 0 16px; }
+    th.hide-narrow, td.hide-narrow { display: none; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>Shakespeare Quotes</h1>
+  <p class="summary" id="summary">Loading…</p>
+</header>
+<nav role="tablist">
+  <button role="tab" data-tab="quotes" aria-selected="true">Quotes</button>
+  <button role="tab" data-tab="stats" aria-selected="false">Stats</button>
+  <button role="tab" data-tab="history" aria-selected="false">History</button>
+</nav>
+<main>
+  <section id="quotes">
+    <div class="controls">
+      <input type="search" id="search" placeholder="Search quotes, characters, plays, tags…" aria-label="Search">
+      <select id="play-filter" aria-label="Play"><option value="">All plays</option></select>
+      <select id="tag-filter" aria-label="Tag"><option value="">All tags</option></select>
+      <label class="check"><input type="checkbox" id="never-shown"> Never shown</label>
+      <span class="count" id="match-count"></span>
+    </div>
+    <table>
+      <thead><tr>
+        <th data-sort="quote">Quote</th>
+        <th data-sort="character">Character</th>
+        <th data-sort="work">Work</th>
+        <th class="hide-narrow">Tags</th>
+        <th data-sort="shown_count" class="hide-narrow">Shown</th>
+        <th data-sort="last_shown" class="hide-narrow">Last shown</th>
+        <th></th>
+      </tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </section>
+  <section id="stats" hidden></section>
+  <section id="history" class="history" hidden></section>
+</main>
+<div id="toast" role="status"></div>
+<script>
+"use strict";
+// The token arrives in the URL fragment (never sent to the server in the URL); keep it for this tab only
+const hashToken = new URLSearchParams(location.hash.slice(1)).get("token");
+if (hashToken) { sessionStorage.setItem("token", hashToken); history.replaceState(null, "", location.pathname); }
+const TOKEN = sessionStorage.getItem("token") || "";
+
+let quotes = [], sort = { key: "work", dir: 1 };
+const $ = (id) => document.getElementById(id);
+
+async function api(method, path) {
+  const res = await fetch(path, { method, headers: { "X-Token": TOKEN } });
+  const body = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(body.error || `${res.status} ${res.statusText}`);
+  return body;
+}
+
+function el(tag, attrs = {}, ...children) {
+  const node = document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs)) {
+    if (k === "class") node.className = v; else if (k.startsWith("on")) node.addEventListener(k.slice(2), v);
+    else node.setAttribute(k, v);
+  }
+  for (const c of children) if (c != null) node.append(c);
+  return node;
+}
+
+function toast(message) {
+  const t = $("toast"); t.textContent = message; t.classList.add("show");
+  clearTimeout(toast.timer); toast.timer = setTimeout(() => t.classList.remove("show"), 3000);
+}
+
+function refLabel(q) {
+  if (q.act) return `${q.act}.${(q.scene || "?").toLowerCase()}`;
+  return "";
+}
+
+function when(iso) {
+  if (!iso) return "—";
+  const d = new Date(iso), days = Math.floor((Date.now() - d) / 86400000);
+  const time = d.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+  if (days < 1 && d.getDate() === new Date().getDate()) return `today ${time}`;
+  if (days < 2) return `yesterday ${time}`;
+  return d.toLocaleDateString([], { day: "numeric", month: "short" });
+}
+
+// Quotes tab
+
+function fillFilters() {
+  const fill = (select, values) => {
+    const keep = select.value;
+    select.length = 1;
+    for (const v of values) select.append(el("option", { value: v }, v));
+    select.value = values.includes(keep) ? keep : "";
+  };
+  fill($("play-filter"), [...new Set(quotes.map((q) => q.play))].sort());
+  fill($("tag-filter"), [...new Set(quotes.flatMap((q) => q.tags || []))].sort());
+}
+
+function visibleQuotes() {
+  const words = $("search").value.toLowerCase().split(/\s+/).filter(Boolean);
+  const play = $("play-filter").value, tag = $("tag-filter").value, never = $("never-shown").checked;
+  return quotes.filter((q) => {
+    const text = [q.quote, q.character, q.work, q.play, ...(q.tags || [])].join(" ").toLowerCase();
+    return words.every((w) => text.includes(w)) && (!play || q.play === play)
+      && (!tag || (q.tags || []).includes(tag)) && (!never || q.shown_count === 0);
+  }).sort((a, b) => {
+    const x = a[sort.key] ?? "", y = b[sort.key] ?? "";
+    return (typeof x === "number" ? x - y : String(x).localeCompare(String(y))) * sort.dir;
+  });
+}
+
+function renderRows() {
+  const rows = visibleQuotes();
+  $("match-count").textContent = rows.length === quotes.length ? `${quotes.length} quotes` : `${rows.length} of ${quotes.length}`;
+  $("rows").replaceChildren(...rows.map((q) => el("tr", { class: q.is_current ? "current" : "" },
+    el("td", { class: "quote" }, `“${q.quote}”`, q.is_current ? el("span", { class: "badge" }, "on screen") : null),
+    el("td", {}, q.character),
+    el("td", {}, q.work, " ", el("span", { class: "ref" }, refLabel(q))),
+    el("td", { class: "hide-narrow" }, ...(q.tags || []).map((t) =>
+      el("span", { class: "tag", title: `Show only “${t}”`, onclick: () => { $("tag-filter").value = t; renderRows(); } }, t))),
+    el("td", { class: "num hide-narrow" }, String(q.shown_count)),
+    el("td", { class: "hide-narrow" }, when(q.last_shown)),
+    el("td", { class: "actions" },
+      el("button", { class: "small", title: "Put this quote on the wallpaper now", onclick: () => show(q) }, "Show"), " ",
+      el("button", { class: "small danger", title: "Remove this quote from the list", onclick: () => remove(q) }, "Remove")),
+  )));
+  if (!rows.length) $("rows").append(el("tr", {}, el("td", { colspan: "7", class: "empty" }, "No quotes match.")));
+}
+
+async function show(q) {
+  try { await api("POST", `/api/show/${q.id}`); toast("Wallpaper updated."); await load(); }
+  catch (e) { toast(`Couldn’t show it: ${e.message}`); }
+}
+
+async function remove(q) {
+  if (!confirm(`Remove this quote?\n\n“${q.quote}”\n— ${q.character}, ${q.work}`)) return;
+  try {
+    const r = await api("DELETE", `/api/quotes/${q.id}`);
+    toast(r.new_quote_shown ? "Removed. It was on screen, so a new quote is shown." : "Removed.");
+    await load();
+  } catch (e) { toast(`Couldn’t remove it: ${e.message}`); }
+}
+
+// Stats tab
+
+function bars(title, pairs, limit = 40) {
+  const max = Math.max(1, ...pairs.map((p) => p[1]));
+  return el("div", { class: "chart" }, el("h2", {}, title), ...pairs.slice(0, limit).map(([name, n]) =>
+    el("div", { class: "bar-row" }, el("span", { class: "name", title: name }, name),
+      el("div", { class: "bar", style: `width: ${(100 * n / max).toFixed(1)}%` }), el("span", { class: "n" }, String(n)))));
+}
+
+function renderStats(s) {
+  const round = s.round, pct = round.pool ? Math.round(100 * round.shown / round.pool) : 0;
+  const filter = round.filter ? ` (${Object.values(round.filter)[0]})` : "";
+  const card = (big, label, extra) => el("div", { class: "card" }, el("div", { class: "big" }, String(big)),
+    el("div", { class: "label" }, label), extra || null);
+  $("stats").replaceChildren(
+    el("div", { class: "cards" },
+      card(s.total, "quotes"),
+      card(s.plays, "plays"),
+      card(s.sonnet_quotes, "from the Sonnets"),
+      card(`${round.shown}/${round.pool}`, `shown this round${filter}`,
+        el("div", { class: "progress" }, el("div", { style: `width: ${pct}%` }))),
+      card(s.never_shown, "never shown"),
+      card(s.history_total, "changes recorded")),
+    el("div", { class: "charts" },
+      bars("Quotes per play", s.by_play),
+      bars("Quotes per tag", s.by_tag),
+      bars("Top characters", s.top_characters),
+      s.most_shown.length ? bars("Most shown", s.most_shown.map((m) => [m.quote, m.count]), 10) : null,
+      s.changes_by_reason.length ? bars("What changed the quote", s.changes_by_reason) : null));
+}
+
+// History tab
+
+const REASONS = { daily: "daily change", cli: "command line", "new-quote": "New Quote Now", filter: "Quotes From",
+  add: "Add Quote", remove: "after a removal", manager: "this page", manual: "manual", log: "from the logs" };
+
+function renderHistory(entries) {
+  if (!entries.length) {
+    $("history").replaceChildren(el("p", { class: "empty" }, "No quote changes recorded yet."));
+    return;
+  }
+  const days = new Map();
+  for (const e of entries) {
+    const day = new Date(e.at).toLocaleDateString([], { weekday: "long", day: "numeric", month: "long", year: "numeric" });
+    if (!days.has(day)) days.set(day, []);
+    days.get(day).push(e);
+  }
+  $("history").replaceChildren(...[...days].map(([day, list]) => el("div", { class: "day" },
+    el("h2", {}, `${day} · ${list.length} change${list.length === 1 ? "" : "s"}`),
+    ...list.map((e) => el("div", { class: "entry" },
+      el("span", { class: "time" }, new Date(e.at).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })),
+      el("span", {}, el("span", { class: "q" }, `“${e.quote}”`), ` — ${e.character}, ${e.sonnet ? `Sonnet ${e.sonnet}` : e.play}`),
+      el("span", { class: "reason" }, REASONS[e.reason] || e.reason))))));
+}
+
+// Loading and navigation
+
+async function load() {
+  try {
+    const [q, s, h] = await Promise.all([api("GET", "/api/quotes"), api("GET", "/api/stats"), api("GET", "/api/history")]);
+    quotes = q;
+    const current = quotes.find((x) => x.is_current);
+    $("summary").textContent = `${s.total} quotes · ${s.plays} plays and the Sonnets`
+      + (current ? ` · on screen: “${current.quote.length > 60 ? current.quote.slice(0, 59) + "…" : current.quote}”` : "");
+    fillFilters(); renderRows(); renderStats(s); renderHistory(h);
+  } catch (e) {
+    $("summary").textContent = TOKEN ? `Couldn’t load the quotes: ${e.message}`
+      : "This page needs its access link: open it from ❦ → Manage Quotes… in the menu bar.";
+  }
+}
+
+for (const tab of document.querySelectorAll("nav button")) {
+  tab.addEventListener("click", () => {
+    for (const t of document.querySelectorAll("nav button")) t.setAttribute("aria-selected", String(t === tab));
+    for (const s of document.querySelectorAll("main section")) s.hidden = s.id !== tab.dataset.tab;
+  });
+}
+for (const th of document.querySelectorAll("th[data-sort]")) {
+  th.addEventListener("click", () => {
+    sort = { key: th.dataset.sort, dir: sort.key === th.dataset.sort ? -sort.dir : (th.dataset.sort.includes("shown") ? -1 : 1) };
+    for (const h of document.querySelectorAll("th")) h.classList.remove("asc", "desc");
+    th.classList.add(sort.dir > 0 ? "asc" : "desc");
+    renderRows();
+  });
+}
+for (const id of ["search", "play-filter", "tag-filter", "never-shown"]) $(id).addEventListener("input", renderRows);
+window.addEventListener("focus", load);  // pick up changes made from the menu bar meanwhile
+load();
+</script>
+</body>
+</html>

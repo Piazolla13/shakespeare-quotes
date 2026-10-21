@@ -48,7 +48,7 @@ If the Mac is asleep at the scheduled hour, the quote changes when it wakes.
 launchctl kickstart -k gui/$(id -u)/com.shakespeare.wallpaper       # trigger the daily agent
 ```
 
-- Quotes: `quotes.json` — 240 quotes: 214 from 36 plays and 26 from the Sonnets. Each has
+- Quotes: `quotes.json` — 239 quotes: 213 from 36 plays and 26 from the Sonnets. Each has
   `quote`, `play`, `character` and optionally `act` and `scene` (shown in the attribution) and
   `tags` (27 themes such as love, death, fate, time, ambition). Sonnet quotes use
   `"play": "Sonnets"`, `"character": "Shakespeare"` and a `sonnet` number instead of act/scene
@@ -75,13 +75,31 @@ stands out less on `parchment`.
 ## Menu bar app
 
 `menubar.py` adds a ❦ icon to the menu bar: shows the current quote, **New Quote Now**,
-**Add Quote…** (with optional tags), **Remove Current Quote…**, **Quotes From** (all quotes, a tag
-or a play), **Theme**, **Edit quotes.json…**, **Open Wallpaper Folder**.
+**Add Quote…** (with optional tags), **Remove Current Quote…**, **Manage Quotes…** (see below),
+**Quotes From** (all quotes with the total, a tag or a play), **Theme**, **Edit quotes.json…**,
+**Open Wallpaper Folder**.
 It also redraws the wallpaper when a display is connected or removed. The daily change above
 keeps working whether or not the app is running.
 
 The agent starts the app at login and restarts it after a crash; choosing **Quit** keeps it closed
 until the next login. Logs: `logs/menubar.out.log`, `logs/menubar.err.log`.
+
+## Managing quotes
+
+❦ → **Manage Quotes…** opens a page in your browser with three tabs:
+
+- **Quotes** — every quote in a searchable, sortable table (filter by play or tag, or only
+  never-shown quotes), with **Show** (put it on the wallpaper now) and **Remove** buttons. The quote
+  on screen is highlighted.
+- **Stats** — totals, quotes per play, per tag and top characters, progress through the current
+  round, never-shown and most-shown quotes, and what changed the quote (daily, menu, …).
+- **History** — every quote change, newest first, grouped by day, with what triggered it.
+
+Without the menu bar app: `.venv/bin/python manager.py`. The page is served only on this Mac
+(127.0.0.1) and its API needs a random token from the link, so other websites can't read or
+change your quotes. The history is kept in `history.json` (not in git); redraws of the same quote
+(waking from sleep, theme changes) aren't counted. The first time the page opens, earlier changes
+are imported from the logs.
 
 ## Checking quotes
 
@@ -100,7 +118,7 @@ where the sonnet number is checked instead of the speaker).
 After adding quotes, `tools/check_quotes.py --write-refs` fills in `act` and `scene` (or `sonnet`) for every
 quote that passes, and later runs report a reference that doesn't match the text.
 
-All 240 included quotes pass. Five are marked `CLOSE`: three use the wording common in quotation
+All 239 included quotes pass. Five are marked `CLOSE`: three use the wording common in quotation
 and in some other editions rather than Gutenberg's text — *What a piece of work is **a** man*
 (Gutenberg: "is man"), *by any other **word*** ("name") and *this **sun** of York* ("son", the
 line puns on both) — and two use modern spelling (*bedfellows*, *to untie*).
