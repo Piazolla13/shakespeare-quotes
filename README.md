@@ -48,9 +48,10 @@ If the Mac is asleep at the scheduled hour, the quote changes when it wakes.
 launchctl kickstart -k gui/$(id -u)/com.shakespeare.wallpaper       # trigger the daily agent
 ```
 
-- Quotes: `quotes.json` — 239 quotes: 213 from 36 plays and 26 from the Sonnets. Each has
-  `quote`, `play`, `character` and optionally `act` and `scene` (shown in the attribution) and
-  `tags` (27 themes such as love, death, fate, time, ambition). Sonnet quotes use
+- Quotes: `quotes.json` — a few hundred quotes from the plays and the Sonnets (current totals
+  are on the **Stats** tab of Manage Quotes…). Each has `quote`, `play`, `character` and
+  optionally `act` and `scene` (shown in the attribution) and `tags` (themes such as love, death,
+  fate, time, ambition). Sonnet quotes use
   `"play": "Sonnets"`, `"character": "Shakespeare"` and a `sonnet` number instead of act/scene
   (shown as "— SHAKESPEARE, SONNET 18"). Recently shown quotes are tracked in `state.json` and skipped
   until every quote (that matches the `--only` filter) has been shown.
@@ -118,10 +119,11 @@ where the sonnet number is checked instead of the speaker).
 After adding quotes, `tools/check_quotes.py --write-refs` fills in `act` and `scene` (or `sonnet`) for every
 quote that passes, and later runs report a reference that doesn't match the text.
 
-All 239 included quotes pass. Five are marked `CLOSE`: three use the wording common in quotation
-and in some other editions rather than Gutenberg's text — *What a piece of work is **a** man*
-(Gutenberg: "is man"), *by any other **word*** ("name") and *this **sun** of York* ("son", the
-line puns on both) — and two use modern spelling (*bedfellows*, *to untie*).
+The included quotes all pass (CI doesn't run the checker, since it downloads the text; run it
+after changing quotes). A few are marked `CLOSE` on purpose: some use the wording common in
+quotation and in other editions rather than Gutenberg's text — e.g. *What a piece of work is
+**a** man* (Gutenberg: "is man"), *by any other **word*** ("name"), *this **sun** of York*
+("son", the line puns on both) — and some use modern spelling (*bedfellows*, *to untie*).
 
 ## Development
 
